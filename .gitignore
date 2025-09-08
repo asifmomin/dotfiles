@@ -15,6 +15,7 @@ secrets/examples/*.yml
 local/
 *.local
 !packages/**/.local/
+packages/**/local.zsh
 
 # OS generated files
 .DS_Store

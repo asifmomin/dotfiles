@@ -1,0 +1,55 @@
+# Local Zsh Configuration Template
+# Copy this file to local.zsh and customize for your needs
+# This file is gitignored and won't be tracked
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Personal Environment Variables
+# ─────────────────────────────────────────────────────────────────────────────
+# export EDITOR="code"  # Use VS Code instead of neovim
+# export BROWSER="firefox"
+# export TERM="alacritty"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Work-specific Configuration
+# ─────────────────────────────────────────────────────────────────────────────
+# export COMPANY_API_KEY="your-key-here"
+# export DATABASE_URL="your-db-connection"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Personal Aliases
+# ─────────────────────────────────────────────────────────────────────────────
+# alias work='cd ~/workspace'
+# alias notes='nvim ~/notes.md'
+# alias deploy='./deploy.sh'
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Custom Functions
+# ─────────────────────────────────────────────────────────────────────────────
+# work_status() {
+#   echo "Checking work environment..."
+#   # Your custom logic here
+# }
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Path Additions
+# ─────────────────────────────────────────────────────────────────────────────
+# export PATH="$HOME/custom-tools:$PATH"
+# export PATH="/opt/local/bin:$PATH"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Tool-specific Configuration
+# ─────────────────────────────────────────────────────────────────────────────
+# Docker
+# export DOCKER_BUILDKIT=1
+# export COMPOSE_DOCKER_CLI_BUILD=1
+
+# Node.js
+# export NODE_ENV="development"
+# export NPM_TOKEN="your-token"
+
+# Python
+# export PYTHONPATH="$HOME/python-libs:$PYTHONPATH"
+
+# Go
+# export GOPATH="$HOME/go"
+# export PATH="$GOPATH/bin:$PATH"
