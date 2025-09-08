@@ -1,0 +1,105 @@
+# Alacritty Terminal Configuration
+# Tokyo Night Theme with CaskaydiaMono Nerd Font
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+padding.x = 14
+padding.y = 14
+decorations = "None"
+opacity = 0.95
+blur = true
+
+[font]
+normal = { family = "CaskaydiaMono Nerd Font", style = "Regular" }
+bold = { family = "CaskaydiaMono Nerd Font", style = "Bold" }
+italic = { family = "CaskaydiaMono Nerd Font", style = "Italic" }
+bold_italic = { family = "CaskaydiaMono Nerd Font", style = "Bold Italic" }
+size = 9
+
+# Tokyo Night Color Scheme
+[colors.primary]
+background = '#1a1b26'
+foreground = '#a9b1d6'
+
+# Normal colors
+[colors.normal]
+black = '#32344a'
+red = '#f7768e'
+green = '#9ece6a'
+yellow = '#e0af68'
+blue = '#7aa2f7'
+magenta = '#ad8ee6'
+cyan = '#449dab'
+white = '#787c99'
+
+# Bright colors
+[colors.bright]
+black = '#444b6a'
+red = '#ff7a93'
+green = '#b9f27c'
+yellow = '#ff9e64'
+blue = '#7da6ff'
+magenta = '#bb9af7'
+cyan = '#0db9d7'
+white = '#acb0d0'
+
+[colors.selection]
+background = '#283457'
+foreground = '#a9b1d6'
+
+[colors.cursor]
+cursor = '#a9b1d6'
+text = '#1a1b26'
+
+# Search colors
+[colors.search.matches]
+foreground = '#1a1b26'
+background = '#e0af68'
+
+[colors.search.focused_match]
+foreground = '#1a1b26'
+background = '#9ece6a'
+
+# Keyboard bindings
+[keyboard]
+bindings = [
+  # Toggle fullscreen
+  { key = "F11", action = "ToggleFullscreen" },
+  
+  # Scrolling
+  { key = "PageUp", mods = "Shift", action = "ScrollPageUp" },
+  { key = "PageDown", mods = "Shift", action = "ScrollPageDown" },
+  { key = "Home", mods = "Shift", action = "ScrollToTop" },
+  { key = "End", mods = "Shift", action = "ScrollToBottom" },
+  
+  # Font size
+  { key = "Plus", mods = "Control", action = "IncreaseFontSize" },
+  { key = "Minus", mods = "Control", action = "DecreaseFontSize" },
+  { key = "Key0", mods = "Control", action = "ResetFontSize" },
+  
+  # Copy/Paste
+  { key = "C", mods = "Control|Shift", action = "Copy" },
+  { key = "V", mods = "Control|Shift", action = "Paste" },
+]
+
+[cursor]
+style = { shape = "Block", blinking = "Off" }
+unfocused_hollow = true
+
+[selection]
+save_to_clipboard = true
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[bell]
+animation = "EaseOutExpo"
+duration = 0
+color = "#ffffff"
+
+# Mouse
+[mouse]
+hide_when_typing = true
