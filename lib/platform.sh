@@ -6,7 +6,7 @@
 # Detect the current platform
 detect_platform() {
     local platform
-    
+
     if [[ "$OSTYPE" == "darwin"* ]]; then
         platform="macos"
     elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
@@ -18,7 +18,7 @@ detect_platform() {
     else
         platform="unknown"
     fi
-    
+
     echo "$platform"
 }
 

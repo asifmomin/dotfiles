@@ -1,0 +1,10 @@
+# SOPS configuration file
+# Replace age1... with your actual age public key (run: just secrets:init)
+
+creation_rules:
+  - path_regex: \.sops\.(yaml|yml|json)$
+    age: >-
+      age1placeholder_replace_with_your_actual_age_public_key_from_secrets_init_command
+  - path_regex: secrets/.*\.(yaml|yml|json)$  
+    age: >-
+      age1placeholder_replace_with_your_actual_age_public_key_from_secrets_init_command

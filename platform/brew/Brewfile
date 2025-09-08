@@ -1,0 +1,80 @@
+# Homebrew Bundle file for dotfiles
+# Usage: brew bundle --file=platform/brew/Brewfile
+
+tap "homebrew/bundle"
+tap "homebrew/cask-fonts"
+
+# Essential tools for dotfiles management
+brew "stow"         # Symlink farm manager
+brew "just"         # Command runner (alternative to make)
+brew "sops"         # Secrets management
+brew "age"          # Encryption for sops
+
+# Core development tools
+brew "git"          # Version control
+brew "gh"           # GitHub CLI
+brew "neovim"       # Text editor
+brew "tmux"         # Terminal multiplexer
+brew "direnv"       # Per-directory environment variables
+
+# Shell and prompt
+brew "zsh" unless OS.mac?        # Shell (macOS has zsh by default)
+brew "starship"                  # Cross-shell prompt
+
+# Modern CLI utilities (replacements)
+brew "bat"          # Better cat with syntax highlighting
+brew "eza"          # Better ls with colors and icons  
+brew "fd"           # Better find
+brew "ripgrep"      # Better grep
+brew "fzf"          # Fuzzy finder
+brew "zoxide"       # Smart cd replacement
+brew "btop"         # Better top/htop
+brew "lazygit"      # Git TUI
+brew "tldr"         # Simplified man pages
+
+# Development utilities
+brew "mise"         # Runtime version manager (asdf alternative)
+brew "jq"           # JSON processor
+brew "yq"           # YAML processor
+brew "curl" unless OS.mac?       # HTTP client (macOS has curl built-in)
+brew "wget"         # File downloader
+brew "tree"         # Directory tree viewer
+brew "watch" unless OS.mac?      # Execute commands periodically (macOS has different watch)
+
+# System info and monitoring
+brew "fastfetch"    # System information display
+brew "htop"         # Process viewer (fallback for btop)
+
+# Fonts - matching Omarchy font system
+cask "font-caskaydia-mono-nerd-font"    # Primary monospace (terminal/code)
+cask "font-liberation"                   # System UI fonts (Sans/Serif)
+cask "font-noto-sans"                    # International support
+cask "font-noto-serif"                   # Document reading
+cask "font-noto-emoji"                   # Emoji support
+
+# Alternative monospace options
+cask "font-jetbrains-mono-nerd-font"    
+cask "font-fira-code-nerd-font"
+
+# Terminal emulator (cross-platform)
+cask "alacritty"
+
+# Additional macOS-specific tools
+if OS.mac?
+  brew "coreutils"  # GNU core utilities
+  brew "gnu-sed"    # GNU sed  
+  brew "findutils"  # GNU find utilities
+  brew "grep"       # GNU grep
+  brew "gawk"       # GNU awk
+  brew "gnu-tar"    # GNU tar
+end
+
+# Linux-specific dependencies (when using Homebrew on Linux)  
+if OS.linux?
+  brew "gcc"        # Compiler for building packages
+  brew "make"       # Build tool
+  brew "build-essential" rescue nil  # Build tools (if available)
+end
+
+# WSL-specific considerations
+# Note: WSL is detected as Linux by Homebrew, but may need additional tools
