@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+# Alacritty theme switcher
+# Usage: alacritty-theme [theme-name]
+
+set -euo pipefail
+
+ALACRITTY_CONFIG="$HOME/.config/alacritty/alacritty.toml"
+THEMES_DIR="$HOME/.config/alacritty/themes"
+
+# Available themes
+declare -A themes=(
+    ["tokyo-night"]="Tokyo Night (Default)"
+    ["tokyo-night-storm"]="Tokyo Night Storm (Darker)"
+    ["tokyo-night-light"]="Tokyo Night Light"
+)
+
+# Function to list available themes
+list_themes() {
+    echo "Available themes:"
+    for key in "${!themes[@]}"; do
+        echo "  $key - ${themes[$key]}"
+    done
+}
+
+# Function to apply theme
+apply_theme() {
+    local theme="$1"
+    local theme_file="$THEMES_DIR/${theme}.toml"
+    
+    if [[ ! -f "$theme_file" ]]; then
+        echo "Error: Theme '$theme' not found!"
+        echo ""
+        list_themes
+        exit 1
+    fi
+    
+    # Remove existing import line if present
+    if grep -q "^general.import" "$ALACRITTY_CONFIG" 2>/dev/null; then
+        sed -i '/^general.import/d' "$ALACRITTY_CONFIG"
+    fi
+    
+    # Add new import at the beginning
+    sed -i "1i general.import = [ \"~/.config/alacritty/themes/${theme}.toml\" ]" "$ALACRITTY_CONFIG"
+    
+    echo "✓ Applied theme: ${themes[$theme]:-$theme}"
+}
+
+# Main
+if [[ $# -eq 0 ]]; then
+    echo "Alacritty Theme Switcher"
+    echo "Usage: $(basename "$0") <theme-name>"
+    echo ""
+    list_themes
+    exit 0
+fi
+
+apply_theme "$1"

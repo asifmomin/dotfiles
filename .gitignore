@@ -14,6 +14,7 @@ secrets/examples/*.yml
 # Local overrides
 local/
 *.local
+!packages/**/.local/
 
 # OS generated files
 .DS_Store
