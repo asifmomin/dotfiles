@@ -1,0 +1,44 @@
+# Secrets and sensitive files
+secrets/*.yaml
+secrets/*.yml
+!secrets/README.md
+!secrets/examples/
+secrets/examples/*.yaml
+secrets/examples/*.yml
+!secrets/examples/*.sops.yaml
+
+# Age keys
+*.age
+*.key
+
+# Local overrides
+local/
+*.local
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Backup files
+*.backup
+*.bak
+*.orig
+
+# Logs
+*.log
+
+# Temporary files
+.tmp/
+tmp/
