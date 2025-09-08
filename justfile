@@ -177,9 +177,9 @@ status:
 	@echo "📊 Dotfiles Status"
 	@echo "=================="
 	@echo ""
-	@echo "Repository: $$(git remote get-url origin)"
-	@echo "Branch: $$(git branch --show-current)"
-	@echo "Last commit: $$(git log -1 --format='%h %s (%cr)')"
+	@git remote get-url origin | sed 's/^/Repository: /'
+	@git branch --show-current | sed 's/^/Branch: /'
+	@git log -1 --format='Last commit: %h %s (%cr)'
 	@echo ""
 	@echo "Installed packages:"
 	@ls packages/
