@@ -1,0 +1,33 @@
+# Bat Configuration with Tokyo Night Theme
+# Syntax highlighting with consistent theming
+
+# Tokyo Night theme (close match)
+--theme="TwoDark"
+
+# Show line numbers
+--style="numbers,changes,header"
+
+# Use paging for long output
+--paging=auto
+
+# Highlight long lines
+--wrap=auto
+
+# Show non-printable characters
+--show-all=false
+
+# Use italic text
+--italic-text=always
+
+# Set tab width
+--tabs=2
+
+# Map file extensions to languages
+--map-syntax "*.conf:INI"
+--map-syntax "*.config:INI"
+--map-syntax "Dockerfile*:Dockerfile"
+--map-syntax "docker-compose*.yml:YAML"
+--map-syntax "*.env:Bash"
+--map-syntax "*.env.*:Bash"
+--map-syntax "justfile:Makefile"
+--map-syntax "Justfile:Makefile"

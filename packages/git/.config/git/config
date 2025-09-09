@@ -1,0 +1,118 @@
+# Git Configuration with Tokyo Night Theme
+# XDG-compliant configuration
+
+[user]
+	# Set via: git config --global user.name "Your Name"
+	# Set via: git config --global user.email "your.email@example.com"
+
+[core]
+	editor = nvim
+	autocrlf = input
+	excludesfile = ~/.config/git/ignore
+	pager = bat --style=plain --paging=always
+
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = true
+
+[push]
+	default = current
+	autoSetupRemote = true
+
+[fetch]
+	prune = true
+
+[merge]
+	conflictstyle = diff3
+
+[diff]
+	algorithm = patience
+	colorMoved = default
+
+# Tokyo Night Colors for Git
+[color]
+	ui = auto
+
+[color "branch"]
+	current = cyan bold
+	local = cyan
+	remote = magenta
+
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red
+	new = green
+	whitespace = red reverse
+
+[color "status"]
+	added = green
+	changed = yellow
+	untracked = red
+
+# Aliases (adapted from Omarchy)
+[alias]
+	# Basic shortcuts
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+	
+	# Useful shortcuts
+	a = add
+	aa = add -A
+	ac = !git add -A && git commit
+	acm = !git add -A && git commit -m
+	alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/' | sort
+	
+	# Branch management
+	bd = branch -d
+	bdd = branch -D
+	
+	# Commit shortcuts
+	cm = commit -m
+	ca = commit -am
+	amend = commit --amend
+	
+	# Log and history
+	l = log --oneline
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	ll = log --stat --abbrev-commit
+	lol = log --graph --decorate --pretty=oneline --abbrev-commit
+	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+	
+	# Diff shortcuts
+	d = diff
+	dc = diff --cached
+	ds = diff --stat
+	
+	# Stash shortcuts
+	sl = stash list
+	sa = stash apply
+	ss = stash save
+	
+	# Reset shortcuts
+	unstage = reset HEAD --
+	uncommit = reset --soft HEAD^
+	
+	# Remote shortcuts
+	pu = push
+	puf = push --force-with-lease
+	puu = push -u origin HEAD
+	
+	# Status shortcuts
+	s = status -s
+	
+	# Clean shortcuts
+	clean-branches = !git branch --merged | grep -v '\\*\\|main\\|master\\|develop' | xargs -n 1 git branch -d
+
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+
+[rerere]
+	enabled = true
+
+[help]
+	autocorrect = 1

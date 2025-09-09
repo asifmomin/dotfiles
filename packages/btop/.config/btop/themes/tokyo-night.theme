@@ -1,0 +1,104 @@
+# Tokyo Night theme for btop++
+# Based on the Tokyo Night color palette
+
+# Main background and foreground
+theme[main_bg]="#1a1b26"
+theme[main_fg]="#a9b1d6"
+
+# Highlight color for selected items
+theme[hi_fg]="#7aa2f7"
+
+# Title color
+theme[title]="#7dcfff"
+
+# Inactive/disabled text
+theme[inactive_fg]="#565f89"
+
+# Process box colors
+theme[proc_misc]="#bb9af7"
+theme[proc_box]="#565f89"
+theme[proc_start]="#9ece6a"
+theme[proc_mid]="#e0af68"
+theme[proc_end]="#f7768e"
+
+# CPU box colors
+theme[cpu_box]="#565f89"
+theme[cpu_start]="#9ece6a"
+theme[cpu_mid]="#e0af68"
+theme[cpu_end]="#f7768e"
+
+# Memory box colors
+theme[mem_box]="#565f89"
+theme[mem_start]="#7aa2f7"
+theme[mem_mid]="#bb9af7"
+theme[mem_end]="#f7768e"
+
+# Network box colors
+theme[net_box]="#565f89"
+theme[net_start]="#7dcfff"
+theme[net_mid]="#7aa2f7"
+theme[net_end]="#bb9af7"
+
+# Chart colors (for graphs)
+theme[chart_bg]="#16161e"
+theme[chart_fg]="#a9b1d6"
+
+# Temperature colors
+theme[temp_start]="#9ece6a"
+theme[temp_mid]="#e0af68"
+theme[temp_end]="#f7768e"
+
+# Graph colors
+theme[graph_text]="#a9b1d6"
+
+# Meter colors
+theme[meter_bg]="#16161e"
+
+# Process colors
+theme[process_start]="#9ece6a"
+theme[process_mid]="#e0af68"
+theme[process_end]="#f7768e"
+
+# Gradients for various metrics
+theme[free_start]="#9ece6a"
+theme[free_mid]="#7dcfff"
+theme[free_end]="#7aa2f7"
+
+theme[cached_start]="#bb9af7"
+theme[cached_mid]="#7aa2f7"
+theme[cached_end]="#7dcfff"
+
+theme[available_start]="#7dcfff"
+theme[available_mid]="#7aa2f7"
+theme[available_end]="#bb9af7"
+
+theme[used_start]="#e0af68"
+theme[used_mid]="#ff9e64"
+theme[used_end]="#f7768e"
+
+theme[download_start]="#7dcfff"
+theme[download_mid]="#7aa2f7"
+theme[download_end]="#bb9af7"
+
+theme[upload_start]="#9ece6a"
+theme[upload_mid]="#e0af68"
+theme[upload_end]="#ff9e64"
+
+# Disk colors
+theme[disk_start]="#7aa2f7"
+theme[disk_mid]="#bb9af7"
+theme[disk_end]="#f7768e"
+
+# Additional UI elements
+theme[selected_bg]="#283457"
+theme[selected_fg]="#a9b1d6"
+
+theme[div_line]="#565f89"
+theme[text]="#a9b1d6"
+theme[symbol]="#7dcfff"
+theme[symbol_on]="#9ece6a"
+
+# Battery colors
+theme[battery_start]="#9ece6a"
+theme[battery_mid]="#e0af68"
+theme[battery_end]="#f7768e"

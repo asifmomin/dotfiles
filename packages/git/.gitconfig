@@ -1,0 +1,3 @@
+# Legacy shim - include XDG config
+[include]
+	path = ~/.config/git/config
