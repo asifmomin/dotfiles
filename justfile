@@ -61,7 +61,7 @@ stow-check:
 		if [[ -d "$$package" ]]; then \
 			name=$${package%/}; \
 			echo "Package: $$name"; \
-			stow -d . -t ~ -n -v "$$name" 2>&1 | sed 's/^/  /' || true; \
+			stow -d . -t ~ -n -v "$$name" 2>&1 | sed 's/^/  /' || echo "  ⚠ No operations for $$name"; \
 			echo ""; \
 		fi; \
 	done
@@ -69,21 +69,26 @@ stow-check:
 # Apply all stow packages
 stow-apply:
 	@echo "🔗 Applying stow packages..."
-	@cd packages && applied=0; \
+	@cd packages && applied=0; failed=0; \
 	for package in */; do \
 		if [[ -d "$$package" ]]; then \
 			name=$${package%/}; \
 			echo "Applying package: $$name"; \
-			if stow -d . -t ~ "$$name"; then \
+			if output=$$(stow -d . -t ~ "$$name" 2>&1); then \
 				echo "  ✓ $$name applied successfully"; \
 				((applied++)); \
 			else \
 				echo "  ✗ $$name failed to apply"; \
+				echo "$$output" | sed 's/^/    /'; \
+				((failed++)); \
 			fi; \
 		fi; \
 	done; \
 	echo ""; \
-	echo "✓ Applied $$applied packages"
+	echo "✓ Applied $$applied packages"; \
+	if [[ $$failed -gt 0 ]]; then \
+		echo "⚠ $$failed packages failed to apply"; \
+	fi
 	@if [[ -f ~/.zshrc ]]; then \
 		echo "💡 Restart your shell to load new configuration"; \
 	fi
