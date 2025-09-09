@@ -99,12 +99,40 @@ install_homebrew() {
     print_success "Homebrew installed"
 }
 
+# Ensure Homebrew is in PATH
+ensure_brew_in_path() {
+    if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+    elif [[ -d "$HOME/.linuxbrew" ]]; then
+        eval "$($HOME/.linuxbrew/bin/brew shellenv)"
+    fi
+}
+
 # Install essential tools
 install_essentials() {
     print_step "Installing essential tools"
     
+    # Ensure brew is in PATH
+    ensure_brew_in_path
+    
+    # Verify brew is available
+    if ! command_exists brew; then
+        print_error "Homebrew not found in PATH after installation"
+        print_warning "Please manually add Homebrew to your PATH and run the script again"
+        exit 1
+    fi
+    
     # Install core tools needed for dotfiles
-    brew install --quiet stow just sops age git
+    print_step "Installing stow, just, sops, age, git..."
+    brew install --quiet stow just sops age git || {
+        print_warning "Some packages may have failed to install, continuing..."
+    }
+    
+    # Verify critical tools
+    if ! command_exists just; then
+        print_warning "'just' command not found, attempting to install again..."
+        brew install just
+    fi
     
     print_success "Essential tools installed"
 }
@@ -137,8 +165,23 @@ run_bootstrap() {
         exit 1
     fi
     
+    # Ensure brew is in PATH before running just
+    ensure_brew_in_path
+    
+    # Verify just command is available
+    if ! command_exists just; then
+        print_error "'just' command not found. Please ensure it's installed and in PATH"
+        print_warning "Try running: brew install just"
+        exit 1
+    fi
+    
+    print_step "Running: just bootstrap"
     # Run the bootstrap command
-    just bootstrap
+    just bootstrap || {
+        print_error "Failed to run 'just bootstrap'"
+        print_warning "You can try running it manually: cd $DOTFILES_DIR && just bootstrap"
+        exit 1
+    }
     
     print_success "Dotfiles bootstrap completed"
 }
@@ -228,6 +271,10 @@ main() {
     # Run installation steps
     backup_configs
     install_homebrew
+    
+    # Ensure Homebrew is in PATH for the rest of the script
+    ensure_brew_in_path
+    
     install_essentials
     clone_dotfiles
     run_bootstrap
