@@ -129,7 +129,7 @@ The configuration sets these key variables:
 - `git` - Version control
 
 ### Recommended
-- `starship` - Cross-shell prompt
+- `starship` - Cross-shell prompt (see [STARSHIP.md](STARSHIP.md) for configuration)
 - `eza` - Modern ls replacement
 - `bat` - Better cat with syntax highlighting
 - `fzf` - Fuzzy finder

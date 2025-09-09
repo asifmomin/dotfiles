@@ -1,0 +1,279 @@
+# Starship Prompt Configuration
+# Tokyo Night Theme with Git Integration
+
+# Timeout for commands
+command_timeout = 500
+scan_timeout = 30
+
+# Add newline before prompt
+add_newline = true
+
+# Custom format with all modules
+format = """
+[](#7aa2f7)\
+$username\
+[](bg:#9ece6a fg:#7aa2f7)\
+$directory\
+[](fg:#9ece6a bg:#bb9af7)\
+$git_branch\
+$git_status\
+[](fg:#bb9af7 bg:#7dcfff)\
+$c\
+$rust\
+$golang\
+$nodejs\
+$php\
+$java\
+$kotlin\
+$haskell\
+$python\
+$ruby\
+[](fg:#7dcfff bg:#e0af68)\
+$docker_context\
+$conda\
+[](fg:#e0af68 bg:#565f89)\
+$time\
+[ ](fg:#565f89)\
+$line_break$character"""
+
+# Prompt character with Tokyo Night colors
+[character]
+success_symbol = "[❯](bold fg:#9ece6a)"
+error_symbol = "[❯](bold fg:#f7768e)"
+vimcmd_symbol = "[❮](bold fg:#7aa2f7)"
+
+# Username module
+[username]
+show_always = false
+style_user = "bg:#7aa2f7 fg:#1a1b26"
+style_root = "bg:#7aa2f7 fg:#f7768e"
+format = '[ $user ]($style)'
+disabled = false
+
+# Directory module with Tokyo Night colors
+[directory]
+style = "fg:#1a1b26 bg:#9ece6a"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+truncate_to_repo = true
+
+# Advanced directory substitutions
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+"Developer" = "󰲋 "
+"~/dotfiles" = " "
+"~" = " "
+
+# Git branch with Tokyo Night styling
+[git_branch]
+symbol = ""
+style = "bg:#bb9af7 fg:#1a1b26"
+format = '[ $symbol $branch ]($style)'
+
+# Git status with detailed symbols
+[git_status]
+style = "bg:#bb9af7 fg:#1a1b26"
+format = '[$all_status$ahead_behind ]($style)'
+conflicted = "🏳"
+up_to_date = ""
+untracked = " "
+ahead = "⇡${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+behind = "⇣${count}"
+stashed = "󰏗 "
+modified = " "
+staged = '[++\($count\)](bg:#bb9af7 fg:#1a1b26)'
+renamed = "󰖷 "
+deleted = " "
+
+# Node.js with Tokyo Night colors
+[nodejs]
+symbol = ""
+style = "bg:#7dcfff fg:#1a1b26"
+format = '[ $symbol ($version) ]($style)'
+detect_extensions = ["js", "mjs", "cjs", "ts", "mts", "cts"]
+detect_files = ["package.json", ".node-version"]
+detect_folders = ["node_modules"]
+
+# Python with Tokyo Night colors
+[python]
+symbol = " "
+style = "bg:#7dcfff fg:#1a1b26"
+format = '[ $symbol ($version) ]($style)'
+pyenv_version_name = true
+detect_extensions = ["py"]
+detect_files = [".python-version", "Pipfile", "pyproject.toml"]
+
+# Ruby with Tokyo Night colors
+[ruby]
+symbol = " "
+style = "bg:#7dcfff fg:#1a1b26"
+format = '[ $symbol ($version) ]($style)'
+detect_extensions = ["rb"]
+detect_files = ["Gemfile", ".ruby-version"]
+
+# Rust with Tokyo Night colors
+[rust]
+symbol = ""
+style = "bg:#7dcfff fg:#1a1b26"
+format = '[ $symbol ($version) ]($style)'
+detect_extensions = ["rs"]
+detect_files = ["Cargo.toml"]
+
+# Go with Tokyo Night colors
+[golang]
+symbol = " "
+style = "bg:#7dcfff fg:#1a1b26"
+format = '[ $symbol ($version) ]($style)'
+detect_extensions = ["go"]
+detect_files = ["go.mod", "go.sum"]
+
+# PHP with Tokyo Night colors
+[php]
+symbol = " "
+style = "bg:#7dcfff fg:#1a1b26"
+format = '[ $symbol ($version) ]($style)'
+detect_extensions = ["php"]
+detect_files = ["composer.json", ".php-version"]
+
+# Java with Tokyo Night colors
+[java]
+symbol = " "
+style = "bg:#7dcfff fg:#1a1b26"
+format = '[ $symbol ($version) ]($style)'
+detect_extensions = ["java", "class", "gradle", "jar"]
+
+# Docker context
+[docker_context]
+symbol = " "
+style = "bg:#e0af68 fg:#1a1b26"
+format = '[ $symbol $context ]($style)'
+only_with_files = true
+detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
+
+# Conda environment
+[conda]
+symbol = " "
+style = "bg:#e0af68 fg:#1a1b26"
+format = '[ $symbol $environment ]($style)'
+
+# Time module
+[time]
+disabled = false
+time_format = "%R" # Hour:Minute Format
+style = "bg:#565f89 fg:#a9b1d6"
+format = '[  $time ]($style)'
+
+# Command duration
+[cmd_duration]
+min_time = 2_000
+format = "took [$duration](bold fg:#e0af68)"
+show_milliseconds = false
+
+# Memory usage
+[memory_usage]
+disabled = false
+threshold = 75
+format = "via $symbol [${ram_pct}](bold fg:#f7768e)"
+symbol = "󰍛 "
+
+# AWS
+[aws]
+symbol = "  "
+style = "bold fg:#ff9e64"
+format = '[$symbol($profile )(\($region\) )]($style)'
+
+# Kubernetes
+[kubernetes]
+symbol = "󱃾 "
+style = "bold fg:#7aa2f7"
+format = '[$symbol$context( \($namespace\))]($style) '
+disabled = false
+
+# Terraform
+[terraform]
+symbol = "󱁢 "
+style = "bold fg:#9ece6a"
+format = '[$symbol$workspace]($style) '
+
+# Package version
+[package]
+symbol = "󰏗 "
+style = "bold fg:#e0af68"
+format = '[$symbol$version]($style) '
+disabled = false
+
+# Battery (useful for laptops)
+[battery]
+full_symbol = "󰁹 "
+charging_symbol = "󰂄 "
+discharging_symbol = "󰂃 "
+unknown_symbol = "󰁽 "
+empty_symbol = "󰂎 "
+
+[[battery.display]]
+threshold = 10
+style = "bold fg:#f7768e"
+
+[[battery.display]]
+threshold = 30
+style = "bold fg:#e0af68"
+
+[[battery.display]]
+threshold = 100
+style = "bold fg:#9ece6a"
+
+# Status module (exit code)
+[status]
+style = "fg:#f7768e"
+symbol = "✘ "
+success_symbol = ""
+format = '[$symbol$common_meaning$signal_name$maybe_int]($style) '
+map_symbol = true
+disabled = false
+
+# Jobs
+[jobs]
+symbol = ""
+style = "bold fg:#7aa2f7"
+number_threshold = 1
+format = "[$symbol]($style)"
+
+# Shell indicator
+[shell]
+fish_indicator = "󰈺 "
+powershell_indicator = "_"
+bash_indicator = ""
+zsh_indicator = "%"
+unknown_indicator = "?"
+style = "fg:#a9b1d6"
+disabled = false
+
+# Hostname
+[hostname]
+ssh_only = true
+ssh_symbol = " "
+format = "[$ssh_symbol$hostname]($style) "
+style = "bold fg:#7aa2f7"
+disabled = false
+
+# Line break
+[line_break]
+disabled = false
+
+# Custom modules for specific tools
+[custom.omarchy]
+description = "Shows Omarchy status"
+command = "echo '󰊠'"
+when = "test -d ~/.local/share/omarchy"
+style = "bold fg:#bb9af7"
+format = "[$output]($style) "
+disabled = true
+
+# Simplified format for minimal prompt (alternative)
+# Uncomment to use minimal prompt instead
+# format = "$directory$git_branch$git_status$character"

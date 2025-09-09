@@ -1,0 +1,107 @@
+#!/usr/bin/env bash
+
+# Prompt style switcher for Starship
+# Usage: prompt-switch [style]
+
+set -euo pipefail
+
+STARSHIP_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}"
+STARSHIP_CONFIG="$STARSHIP_CONFIG_DIR/starship.toml"
+
+# Available styles
+declare -A styles=(
+    ["minimal"]="Minimal prompt (Omarchy style) - DEFAULT"
+    ["full"]="Full-featured prompt with powerline style"
+    ["custom"]="User's custom configuration"
+)
+
+# Function to list available styles
+list_styles() {
+    echo "Available prompt styles:"
+    for style in "${!styles[@]}"; do
+        echo "  $style - ${styles[$style]}"
+    done
+}
+
+# Function to switch style
+switch_style() {
+    local style="$1"
+    local source_file=""
+    
+    case "$style" in
+        minimal)
+            # Copy from minimal config in dotfiles (default)
+            if [[ -f "$HOME/dotfiles/packages/shell/.config/starship.toml" ]]; then
+                source_file="$HOME/dotfiles/packages/shell/.config/starship.toml"
+            else
+                echo "Error: Minimal starship config not found!"
+                exit 1
+            fi
+            ;;
+        full)
+            # Copy from full-featured config in dotfiles
+            if [[ -f "$HOME/dotfiles/packages/shell/.config/starship-full.toml" ]]; then
+                source_file="$HOME/dotfiles/packages/shell/.config/starship-full.toml"
+            else
+                echo "Error: Full starship config not found!"
+                exit 1
+            fi
+            ;;
+        custom)
+            # Check if custom config exists
+            if [[ -f "$STARSHIP_CONFIG_DIR/starship-custom.toml" ]]; then
+                source_file="$STARSHIP_CONFIG_DIR/starship-custom.toml"
+            else
+                echo "Error: Custom config not found at $STARSHIP_CONFIG_DIR/starship-custom.toml"
+                echo "Create your custom config there first."
+                exit 1
+            fi
+            ;;
+        *)
+            echo "Error: Unknown style '$style'"
+            echo ""
+            list_styles
+            exit 1
+            ;;
+    esac
+    
+    # Backup current config if it exists
+    if [[ -f "$STARSHIP_CONFIG" ]]; then
+        cp "$STARSHIP_CONFIG" "${STARSHIP_CONFIG}.backup"
+    fi
+    
+    # Apply new style
+    cp "$source_file" "$STARSHIP_CONFIG"
+    echo "✓ Applied prompt style: $style"
+    echo "Restart your shell to see the changes: exec \$SHELL"
+}
+
+# Function to show current style
+show_current() {
+    if [[ ! -f "$STARSHIP_CONFIG" ]]; then
+        echo "No Starship configuration found"
+        return
+    fi
+    
+    # Try to identify the current style by checking for unique patterns
+    if grep -q "Powerline" "$STARSHIP_CONFIG" 2>/dev/null; then
+        echo "Current style: default (full-featured)"
+    elif grep -q "Minimal Starship Configuration" "$STARSHIP_CONFIG" 2>/dev/null; then
+        echo "Current style: minimal"
+    else
+        echo "Current style: custom or modified"
+    fi
+}
+
+# Main
+if [[ $# -eq 0 ]]; then
+    echo "Starship Prompt Style Switcher"
+    echo "Usage: $(basename "$0") <style>"
+    echo ""
+    show_current
+    echo ""
+    list_styles
+    exit 0
+fi
+
+switch_style "$1"

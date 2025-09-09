@@ -1,0 +1,60 @@
+# Minimal Starship Configuration
+# Based on Omarchy's minimal prompt with Tokyo Night colors
+
+add_newline = true
+command_timeout = 200
+
+# Minimal format - just directory, git, and prompt
+format = "[$directory$git_branch$git_status]($style)$character"
+
+# Prompt character with Tokyo Night colors
+[character]
+error_symbol = "[✗](bold fg:#f7768e)"
+success_symbol = "[❯](bold fg:#7aa2f7)"
+vimcmd_symbol = "[❮](bold fg:#bb9af7)"
+
+# Directory with Tokyo Night cyan
+[directory]
+truncation_length = 2
+truncation_symbol = "…/"
+style = "bold fg:#7dcfff"
+repo_root_style = "bold fg:#9ece6a"
+repo_root_format = "[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
+read_only = " 󰌾"
+read_only_style = "fg:#f7768e"
+
+# Git branch in italic cyan (Omarchy style)
+[git_branch]
+format = "[$branch]($style) "
+style = "italic fg:#7aa2f7"
+symbol = ""
+
+# Git status with Tokyo Night colors
+[git_status]
+format = '[$all_status]($style)'
+style = "fg:#bb9af7"
+ahead = "⇡${count} "
+diverged = "⇕⇡${ahead_count}⇣${behind_count} "
+behind = "⇣${count} "
+conflicted = " "
+up_to_date = ""
+untracked = "? "
+modified = " "
+stashed = "󰏗 "
+staged = " "
+renamed = "󰖷 "
+deleted = " "
+
+# Command duration (only for long commands)
+[cmd_duration]
+min_time = 5_000
+format = "[$duration](bold fg:#e0af68) "
+
+# Exit status (only show on error)
+[status]
+style = "bold fg:#f7768e"
+symbol = "✘ "
+success_symbol = ""
+format = '[$symbol$common_meaning$signal_name$maybe_int]($style) '
+map_symbol = true
+disabled = false
