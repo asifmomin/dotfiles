@@ -45,6 +45,13 @@ export BAT_THEME="TwoDark"  # Close to Tokyo Night
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="./bin:$PATH"
 
+# Homebrew initialization (Linux/WSL)
+if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+elif [[ -d "$HOME/.linuxbrew" ]]; then
+    eval "$($HOME/.linuxbrew/bin/brew shellenv)"
+fi
+
 # FZF configuration with Tokyo Night colors
 export FZF_DEFAULT_OPTS="
   --color=bg+:#283457,bg:#16161e,spinner:#bb9af7,hl:#7aa2f7
