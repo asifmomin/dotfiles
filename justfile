@@ -7,12 +7,12 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 default:
 	@just --list
 
-# Full bootstrap: install packages, apply configs, setup secrets
-bootstrap: install-packages stow-apply
+# Full bootstrap: install packages, apply configs, setup shell
+bootstrap: install-packages stow-apply setup-shell
 	@echo "🎉 Bootstrap completed! Run 'just doctor' to verify installation."
 	@echo ""
 	@echo "Next steps:"
-	@echo "  1. Restart your shell: exec \$SHELL"
+	@echo "  1. Restart your terminal or run: exec zsh"
 	@echo "  2. Run: just doctor"
 	@echo "  3. Setup secrets: just secrets-init"
 
@@ -47,6 +47,10 @@ stow-remove:
 stow-restow:
 	just stow-remove
 	just stow-apply
+
+# Setup shell (register zsh and set as default)
+setup-shell:
+	@lib/scripts/setup-shell.sh
 
 # Initialize secrets management (generate age keys)
 [group('secrets')]
