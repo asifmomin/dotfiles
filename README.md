@@ -1,9 +1,10 @@
-# Dotfiles (Stow + just + sops/age, XDG-first)
+# Dotfiles
 
-> Modern, cross-platform dotfiles with Tokyo Night theme
+> Modern, cross-platform development environment with Tokyo Night theme and Omarchy-inspired minimal design
 
-## Quick start
-```sh
+## Quick Start
+
+```bash
 # One-liner bootstrap (installs everything)
 curl -fsSL https://raw.githubusercontent.com/asifmomin/dotfiles/main/bootstrap.sh | bash
 
@@ -15,46 +16,69 @@ just bootstrap
 
 ## Features
 
-- 🎨 **Tokyo Night theme** across all tools
-- 📦 **Stow-managed** symlinks with XDG-first approach  
-- 🍺 **Homebrew** for cross-platform package management
-- 🔒 **sops + age** for encrypted secrets
-- ⚡ **just** as single command interface
-- 🖥️ **Cross-platform** (macOS, Linux, WSL)
+- 🎨 **Tokyo Night theme** - Consistent colors across all applications
+- 📦 **Stow-managed** - Clean symlink management with XDG-first approach  
+- 🍺 **Homebrew** - Cross-platform package management
+- 🔒 **SOPS + age** - Modern encrypted secrets management
+- ⚡ **Just** - Single command interface for all operations
+- 🖥️ **Cross-platform** - Works on macOS, Linux, and WSL
+- 🎯 **Omarchy-inspired** - Minimal, focused, and performant
+- 🔧 **Modern tooling** - Latest CLI tools and development workflows
 
-## Included Tools
+## What's Included
 
-### Shell & Terminal
-- **Alacritty** (terminal with Tokyo Night)
-- **Zsh** with modern configuration  
-- **Starship** (cross-shell prompt)
-- **Tmux** (terminal multiplexer)
+### Development Environment
+- **Neovim** - LazyVim configuration following Omarchy's minimal approach
+- **Git** - Directory-based identity switching (work/personal) + Tokyo Night colors
+- **Tmux** - Terminal multiplexer with Tokyo Night theme and vim-like bindings
+- **Direnv** - Directory-based environment management for projects
 
-### Modern CLI
-- **eza** (better ls), **bat** (better cat)
-- **fd** (better find), **ripgrep** (better grep) 
-- **fzf** (fuzzy finder), **zoxide** (smart cd)
-- **btop** (system monitor)
+### Modern CLI Tools
+- **Bat** - Syntax-highlighted file viewer with Tokyo Night theme
+- **Btop** - System monitor with custom Tokyo Night theme
+- **Eza** - Modern ls replacement (via shell aliases)
+- **Fd** - Fast find alternative (via shell aliases)
+- **Ripgrep** - Fast text search (via shell aliases)
+- **Fzf** - Fuzzy finder with Tokyo Night colors
+- **Zoxide** - Smart cd replacement (via shell functions)
 
-### Development
-- **Neovim** with LazyVim + Tokyo Night
-- **Git** with custom aliases
-- **GitHub CLI**, **Lazygit**
-- **Mise** (runtime manager)
-- **Direnv** (per-directory environments)
+### Advanced Features
+- **SOPS + age** - Encrypted secrets management for API keys and credentials
+- **Tokyo Night theme** - Unified color palette across all applications
+- **XDG compliance** - Clean config organization in ~/.config/
+- **Cross-platform** - Works identically on macOS, Linux, and WSL
 
-## Available Commands
+## Commands
 
-```sh
-just bootstrap        # Full setup: brew, packages, stow, secrets init
+### Setup & Installation
+```bash
+just bootstrap        # Full setup: packages, stow, secrets
 just doctor          # Health check all tools
-just stow-check      # Dry run stow operations  
-just stow-apply      # Apply all stow packages
-just stow-remove     # Remove all stow packages
-just secrets:init    # Generate age keys, show public key
-just secrets:edit f=path/to/file.sops.yaml
-just secrets:apply   # Decrypt and apply secrets
-just update         # Update packages and sync dotfiles
+just install-packages # Install packages via Homebrew
+```
+
+### Configuration Management
+```bash
+just stow-check      # Preview stow operations (dry run)
+just stow-apply      # Apply all configuration packages
+just stow-remove     # Remove all configuration packages
+just stow-restow     # Remove and reapply packages
+```
+
+### Secrets Management
+```bash
+just secrets-init    # Generate age keys and configure SOPS
+just secrets-edit f= # Edit encrypted file (e.g., secrets/env/github.sops.yaml)
+just secrets-show f= # Show decrypted content
+just secrets-apply   # Decrypt all secrets to ~/.local/share/secrets/
+```
+
+### Maintenance
+```bash
+just update          # Update packages and sync dotfiles
+just clean           # Remove broken symlinks
+just status          # Show dotfiles status and info
+just edit            # Open dotfiles directory in editor
 ```
 
 ## Platform Support
