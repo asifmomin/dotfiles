@@ -199,14 +199,22 @@ run_bootstrap() {
     fi
     
     print_step "Running: just bootstrap"
-    # Run the bootstrap command
-    just bootstrap || {
-        print_error "Failed to run 'just bootstrap'"
-        print_warning "You can try running it manually: cd $DOTFILES_DIR && just bootstrap"
-        exit 1
-    }
+    # Run the bootstrap command which installs packages AND applies stow
+    if just bootstrap; then
+        print_success "Successfully ran 'just bootstrap'"
+    else
+        print_warning "Bootstrap may have partially failed"
+        print_step "Attempting to apply stow configurations manually..."
+        just stow-apply || print_warning "Stow apply failed - you may need to run it manually"
+    fi
     
     print_success "Dotfiles bootstrap completed"
+    
+    # Verify critical symlinks were created
+    if [[ ! -f "$HOME/.zshrc" ]]; then
+        print_warning ".zshrc not found - stow may not have applied correctly"
+        print_warning "Run 'cd $DOTFILES_DIR && just stow-apply' to fix this"
+    fi
 }
 
 # Backup existing configs
