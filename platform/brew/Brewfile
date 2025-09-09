@@ -10,6 +10,11 @@ brew "just"         # Command runner (alternative to make)
 brew "sops"         # Secrets management
 brew "age"          # Encryption for sops
 
+# Linux-specific dependencies (needed early for font extraction)
+if OS.linux?
+  brew "unzip"      # Extraction tool needed for fonts and other archives
+end
+
 # Core development tools
 brew "git"          # Version control
 brew "gh"           # GitHub CLI
@@ -73,7 +78,6 @@ end
 if OS.linux?
   brew "gcc"        # Compiler for building packages
   brew "make"       # Build tool
-  brew "unzip"      # Extraction tool needed for fonts and other archives
 end
 
 # WSL-specific considerations
