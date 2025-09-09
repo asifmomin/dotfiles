@@ -72,12 +72,28 @@ install_homebrew() {
     if [[ $(detect_platform) == "macos" ]]; then
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     else
-        # Linux/WSL
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        # Linux/WSL - try standard location first, fall back to home directory
+        print_warning "Homebrew installation requires sudo access for /home/linuxbrew"
+        print_warning "You may be prompted for your password"
+        
+        # Try to install with sudo if available
+        if command_exists sudo; then
+            # Create linuxbrew directory with sudo if it doesn't exist
+            sudo mkdir -p /home/linuxbrew
+            sudo chown -R "$USER:$(id -gn)" /home/linuxbrew
+        fi
+        
+        # Install Homebrew
+        NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         
         # Add Homebrew to PATH for Linux/WSL
-        echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> "$HOME/.profile"
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
+            echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> "$HOME/.profile"
+            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+        elif [[ -d "$HOME/.linuxbrew" ]]; then
+            echo 'eval "$($HOME/.linuxbrew/bin/brew shellenv)"' >> "$HOME/.profile"
+            eval "$($HOME/.linuxbrew/bin/brew shellenv)"
+        fi
     fi
     
     print_success "Homebrew installed"
@@ -158,6 +174,32 @@ backup_configs() {
     fi
 }
 
+# Check sudo access for Linux/WSL
+check_sudo_access() {
+    local platform
+    platform=$(detect_platform)
+    
+    if [[ "$platform" == "linux" ]] || [[ "$platform" == "wsl" ]]; then
+        if ! command_exists sudo; then
+            print_error "sudo is required but not installed"
+            print_warning "Please install sudo or run this script as root"
+            return 1
+        fi
+        
+        print_step "Checking sudo access (you may be prompted for your password)"
+        if ! sudo -v; then
+            print_error "Unable to obtain sudo access"
+            print_warning "Please ensure you have sudo privileges and try again"
+            return 1
+        fi
+        
+        # Keep sudo alive for the duration of the script
+        while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+    fi
+    
+    return 0
+}
+
 # Main execution
 main() {
     print_header
@@ -175,6 +217,11 @@ main() {
     
     if ! command_exists git; then
         print_error "git is required but not installed"
+        exit 1
+    fi
+    
+    # Check sudo access for Linux/WSL
+    if ! check_sudo_access; then
         exit 1
     fi
     
