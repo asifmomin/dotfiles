@@ -29,88 +29,19 @@ install-packages:
 
 # Health check all tools and configurations
 doctor:
-	@echo "🔍 Running dotfiles health check..."
-	@echo ""
-	@echo "Platform: linux ✓"
-	@echo ""
-	@echo "Required tools:"
-	@command -v git >/dev/null 2>&1 && echo "  git: ✓" || echo "  git: ✗ not found"
-	@command -v stow >/dev/null 2>&1 && echo "  stow: ✓" || echo "  stow: ✗ not found"
-	@command -v brew >/dev/null 2>&1 && echo "  brew: ✓" || echo "  brew: ✗ not found"
-	@command -v zsh >/dev/null 2>&1 && echo "  zsh: ✓" || echo "  zsh: ✗ not found"
-	@command -v starship >/dev/null 2>&1 && echo "  starship: ✓" || echo "  starship: ✗ not found"
-	@command -v nvim >/dev/null 2>&1 && echo "  nvim: ✓" || echo "  nvim: ✗ not found"
-	@echo ""
-	@echo "Optional tools:"
-	@command -v just >/dev/null 2>&1 && echo "  just: ✓" || echo "  just: ✗"
-	@command -v sops >/dev/null 2>&1 && echo "  sops: ✓" || echo "  sops: ✗"
-	@command -v age >/dev/null 2>&1 && echo "  age: ✓" || echo "  age: ✗"
-	@command -v fzf >/dev/null 2>&1 && echo "  fzf: ✓" || echo "  fzf: ✗"
-	@command -v rg >/dev/null 2>&1 && echo "  ripgrep: ✓" || echo "  ripgrep: ✗"
-	@command -v bat >/dev/null 2>&1 && echo "  bat: ✓" || echo "  bat: ✗"
-	@command -v eza >/dev/null 2>&1 && echo "  eza: ✓" || echo "  eza: ✗"
-	@command -v fd >/dev/null 2>&1 && echo "  fd: ✓" || echo "  fd: ✗"
-	@command -v btop >/dev/null 2>&1 && echo "  btop: ✓" || echo "  btop: ✗"
-	@command -v tmux >/dev/null 2>&1 && echo "  tmux: ✓" || echo "  tmux: ✗"
+	@lib/scripts/doctor.sh
 
 # Dry run stow operations (show what would be linked)
 stow-check:
-	@echo "🔍 Checking stow operations (dry run)..."
-	@echo ""
-	@cd packages && for package in */; do \
-		if [[ -d "$$package" ]]; then \
-			name=$${package%/}; \
-			echo "Package: $$name"; \
-			stow -d . -t ~ -n -v "$$name" 2>&1 | sed 's/^/  /' || echo "  ⚠ No operations for $$name"; \
-			echo ""; \
-		fi; \
-	done
+	@lib/scripts/stow-check.sh
 
 # Apply all stow packages
 stow-apply:
-	@echo "🔗 Applying stow packages..."
-	@cd packages && applied=0; failed=0; \
-	for package in */; do \
-		if [[ -d "$$package" ]]; then \
-			name=$${package%/}; \
-			echo "Applying package: $$name"; \
-			if output=$$(stow -d . -t ~ "$$name" 2>&1); then \
-				echo "  ✓ $$name applied successfully"; \
-				applied=$$((applied + 1)); \
-			else \
-				echo "  ✗ $$name failed to apply"; \
-				echo "$$output" | sed 's/^/    /'; \
-				failed=$$((failed + 1)); \
-			fi; \
-		fi; \
-	done; \
-	echo ""; \
-	echo "✓ Applied $$applied packages"; \
-	if [[ $$failed -gt 0 ]]; then \
-		echo "⚠ $$failed packages failed to apply"; \
-	fi
-	@if [[ -f ~/.zshrc ]]; then \
-		echo "💡 Restart your shell to load new configuration"; \
-	fi
+	@lib/scripts/stow-apply.sh
 
 # Remove all stow packages
 stow-remove:
-	@echo "🗑️  Removing stow packages..."
-	@cd packages && removed=0; \
-	for package in */; do \
-		if [[ -d "$$package" ]]; then \
-			name=$${package%/}; \
-			echo "Removing package: $$name"; \
-			if stow -d . -t ~ -D "$$name"; then \
-				echo "  ✓ $$name removed successfully"; \
-				((removed++)); \
-			else \
-				echo "  ✗ $$name failed to remove"; \
-			fi; \
-		fi; \
-	done; \
-	echo ""; \
-	echo "✓ Removed $$removed packages"
+	@lib/scripts/stow-remove.sh
 
 # Restow all packages (remove then apply)
 stow-restow:
@@ -173,30 +104,7 @@ secrets-edit f:
 # Apply/decrypt secrets to their destinations
 [group('secrets')]
 secrets-apply:
-	@echo "🔓 Applying secrets..."
-	@export SOPS_AGE_KEY_FILE="$$HOME/.config/age/key.txt"; \
-	mkdir -p "$$HOME/.local/share/secrets"; \
-	applied=0; \
-	for file in secrets/**/*.sops.yaml; do \
-		if [[ -f "$$file" && ! "$$file" =~ examples/ ]]; then \
-			echo "Decrypting: $$file"; \
-			basename=$$(basename "$$file" .sops.yaml); \
-			output="$$HOME/.local/share/secrets/$$basename.yaml"; \
-			if sops -d "$$file" > "$$output"; then \
-				echo "  ✓ Decrypted to: $$output"; \
-				((applied++)); \
-			else \
-				echo "  ✗ Failed to decrypt: $$file"; \
-			fi; \
-		fi; \
-	done; \
-	echo ""; \
-	if [[ $$applied -gt 0 ]]; then \
-		echo "✓ Applied $$applied secret files to ~/.local/share/secrets/"; \
-		echo "💡 Source them in your shell or applications as needed"; \
-	else \
-		echo "💡 No secret files found to apply (*.sops.yaml in secrets/ excluding examples/)"; \
-	fi
+	@lib/scripts/secrets-apply.sh
 
 # Show decrypted content of a secret file
 [group('secrets')]
