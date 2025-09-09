@@ -13,8 +13,7 @@
 # Highlight long lines
 --wrap=auto
 
-# Show non-printable characters
---show-all=false
+# Show non-printable characters (disabled by default)
 
 # Use italic text
 --italic-text=always
