@@ -206,6 +206,7 @@ main() {
 trap 'echo -e "\n${RED}Bootstrap interrupted${NC}"; exit 130' INT
 
 # Check if script is being sourced or executed
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+# When piped to bash, BASH_SOURCE might not be set, so we always run main
+if [[ "${BASH_SOURCE[0]:-}" == "${0}" ]] || [[ -z "${BASH_SOURCE[0]:-}" ]]; then
     main "$@"
 fi
