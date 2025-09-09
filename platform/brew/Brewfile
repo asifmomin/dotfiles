@@ -73,7 +73,7 @@ end
 if OS.linux?
   brew "gcc"        # Compiler for building packages
   brew "make"       # Build tool
-  brew "build-essential" rescue nil  # Build tools (if available)
+  brew "unzip"      # Extraction tool needed for fonts and other archives
 end
 
 # WSL-specific considerations

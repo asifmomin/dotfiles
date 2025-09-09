@@ -108,6 +108,27 @@ ensure_brew_in_path() {
     fi
 }
 
+# Install system dependencies
+install_system_deps() {
+    local platform
+    platform=$(detect_platform)
+    
+    if [[ "$platform" == "linux" ]] || [[ "$platform" == "wsl" ]]; then
+        print_step "Installing system build dependencies"
+        
+        if command_exists apt-get; then
+            print_step "Installing build-essential via apt"
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq build-essential || {
+                print_warning "Failed to install build-essential, continuing..."
+            }
+            print_success "System dependencies installed"
+        else
+            print_warning "apt-get not found, skipping system dependencies"
+        fi
+    fi
+}
+
 # Install essential tools
 install_essentials() {
     print_step "Installing essential tools"
@@ -274,6 +295,9 @@ main() {
     
     # Ensure Homebrew is in PATH for the rest of the script
     ensure_brew_in_path
+    
+    # Install system dependencies (build-essential on Linux/WSL)
+    install_system_deps
     
     install_essentials
     clone_dotfiles
