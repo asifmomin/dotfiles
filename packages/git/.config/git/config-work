@@ -1,0 +1,26 @@
+# Work-specific Git Configuration
+# Applied automatically for repositories in ~/work/ directory
+
+[user]
+	name = "Your Work Name"
+	email = "your.work.email@company.com"
+
+# Work-specific aliases
+[alias]
+	# Work-specific shortcuts
+	work-init = "!git init && git config user.name 'Your Work Name' && git config user.email 'your.work.email@company.com'"
+	work-clone = "clone --config user.name='Your Work Name' --config user.email='your.work.email@company.com'"
+
+# Work-specific remotes (if using enterprise GitHub/GitLab)
+[url "git@github-work:"]
+	insteadOf = "https://github.company.com/"
+
+# Work-specific push configuration
+[push]
+	# Additional work-specific push rules if needed
+	followTags = true
+
+# Work-specific merge/rebase preferences
+[pull]
+	# Work might prefer merge over rebase
+	rebase = false

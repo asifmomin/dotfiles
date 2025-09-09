@@ -1,10 +1,11 @@
 # Secrets and sensitive files
 secrets/*.yaml
 secrets/*.yml
+secrets/*/*.yaml
+secrets/*/*.yml
 !secrets/README.md
 !secrets/examples/
-secrets/examples/*.yaml
-secrets/examples/*.yml
+# Allow example .sops.yaml files (they contain placeholder data)
 !secrets/examples/*.sops.yaml
 
 # Age keys

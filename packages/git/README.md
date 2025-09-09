@@ -34,11 +34,55 @@ git/
 
 ## Configuration Setup
 
-After installation, set your identity:
+### Directory-Specific Configuration
+
+This Git configuration supports automatic switching between work and personal settings based on directory location:
+
+- **~/work/** - Uses work configuration (`config-work`)
+- **~/per/** - Uses personal configuration (`config-personal`)  
+- **Other directories** - Uses global configuration
+
+### Setup Work Configuration
+
+1. Create work directory and edit work config:
+```bash
+mkdir -p ~/work
+git config --file ~/.config/git/config-work user.name "Your Work Name"
+git config --file ~/.config/git/config-work user.email "your.work.email@company.com"
+```
+
+2. Test work configuration:
+```bash
+cd ~/work
+mkdir test-repo && cd test-repo && git init
+git config user.name    # Should show work name
+git config user.email   # Should show work email
+```
+
+### Setup Personal Configuration
+
+1. Create personal directory and edit personal config:
+```bash
+mkdir -p ~/per
+git config --file ~/.config/git/config-personal user.name "Your Personal Name"  
+git config --file ~/.config/git/config-personal user.email "your.personal@gmail.com"
+```
+
+2. Test personal configuration:
+```bash
+cd ~/per
+mkdir test-repo && cd test-repo && git init
+git config user.name    # Should show personal name
+git config user.email   # Should show personal email
+```
+
+### Global Fallback
+
+For repositories outside ~/work/ and ~/per/, set global defaults:
 
 ```bash
-git config --global user.name "Your Name"
-git config --global user.email "your.email@example.com"
+git config --global user.name "Your Default Name"
+git config --global user.email "your.default.email@example.com"
 ```
 
 ## Tokyo Night Colors
@@ -182,12 +226,68 @@ Then include it in the main config:
 ### Project-specific Settings
 Use `.gitconfig` in project directories for project-specific settings.
 
+## Advanced Directory-Specific Features
+
+### Different SSH Keys
+Configure different SSH keys for work and personal:
+
+```bash
+# In ~/.config/git/config-work
+[core]
+    sshCommand = "ssh -i ~/.ssh/id_work"
+
+# In ~/.config/git/config-personal  
+[core]
+    sshCommand = "ssh -i ~/.ssh/id_personal"
+```
+
+### Different Signing Keys
+Use different GPG keys for work and personal:
+
+```bash
+# Work signing
+git config --file ~/.config/git/config-work user.signingkey "work-gpg-key-id"
+git config --file ~/.config/git/config-work commit.gpgsign true
+
+# Personal signing
+git config --file ~/.config/git/config-personal user.signingkey "personal-gpg-key-id"
+git config --file ~/.config/git/config-personal commit.gpgsign true
+```
+
+### Different Default Branches
+Set different default branches:
+
+```bash
+# Work uses 'main'
+git config --file ~/.config/git/config-work init.defaultBranch main
+
+# Personal uses 'master' 
+git config --file ~/.config/git/config-personal init.defaultBranch master
+```
+
+### Quick Directory Setup
+Create convenience functions in your shell:
+
+```bash
+# Add to ~/.config/zsh/local.zsh
+work() {
+    mkdir -p ~/work/"$1" && cd ~/work/"$1"
+    git config user.name && git config user.email  # Verify config
+}
+
+personal() {
+    mkdir -p ~/per/"$1" && cd ~/per/"$1" 
+    git config user.name && git config user.email  # Verify config
+}
+```
+
 ## Integration with Other Tools
 
 ### Shell Integration
 - Works with zsh aliases (`g`, `ga`, `gc`, etc.)
 - Integrates with starship prompt for git status
 - Compatible with modern CLI tools
+- Directory-specific configs work automatically
 
 ### Editor Integration
 - Neovim as default editor

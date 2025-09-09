@@ -1,10 +1,23 @@
-# SOPS configuration file
-# Replace age1... with your actual age public key (run: just secrets:init)
+# SOPS Configuration
+# Age-based encryption for secrets management
 
 creation_rules:
+  # Default rule for all .sops.yaml files
   - path_regex: \.sops\.(yaml|yml|json)$
     age: >-
-      age1placeholder_replace_with_your_actual_age_public_key_from_secrets_init_command
-  - path_regex: secrets/.*\.(yaml|yml|json)$  
+      age1PLACEHOLDER_REPLACE_WITH_YOUR_PUBLIC_KEY_AFTER_RUNNING_secrets_init
+  
+  # Specific rules for different secret types
+  - path_regex: secrets/.*\.sops\.(yaml|yml)$
     age: >-
-      age1placeholder_replace_with_your_actual_age_public_key_from_secrets_init_command
+      age1PLACEHOLDER_REPLACE_WITH_YOUR_PUBLIC_KEY_AFTER_RUNNING_secrets_init
+  
+  # SSH config secrets
+  - path_regex: secrets/ssh/.*\.sops\.(yaml|yml)$
+    age: >-
+      age1PLACEHOLDER_REPLACE_WITH_YOUR_PUBLIC_KEY_AFTER_RUNNING_secrets_init
+  
+  # Environment secrets
+  - path_regex: secrets/env/.*\.sops\.(yaml|yml)$
+    age: >-
+      age1PLACEHOLDER_REPLACE_WITH_YOUR_PUBLIC_KEY_AFTER_RUNNING_secrets_init

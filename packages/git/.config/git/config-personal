@@ -1,0 +1,26 @@
+# Personal Git Configuration
+# Applied automatically for repositories in ~/per/ directory
+
+[user]
+	name = "Your Personal Name"
+	email = "your.personal.email@gmail.com"
+
+# Personal-specific aliases
+[alias]
+	# Personal shortcuts
+	personal-init = "!git init && git config user.name 'Your Personal Name' && git config user.email 'your.personal.email@gmail.com'"
+	personal-clone = "clone --config user.name='Your Personal Name' --config user.email='your.personal.email@gmail.com'"
+
+# Personal GitHub SSH configuration
+[url "git@github.com:"]
+	insteadOf = "https://github.com/"
+
+# Personal-specific push configuration
+[push]
+	# Personal projects might use different defaults
+	default = simple
+
+# Personal-specific merge/rebase preferences
+[pull]
+	# Personal projects prefer rebase for cleaner history
+	rebase = true

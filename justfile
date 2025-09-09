@@ -120,21 +120,39 @@ secrets-init:
 		echo "❌ age is not installed. Run 'just install-packages' first."; \
 		exit 1; \
 	fi
-	@age_key="$$HOME/.config/sops/age/keys.txt"; \
+	@if ! command -v sops >/dev/null 2>&1; then \
+		echo "❌ sops is not installed. Run 'just install-packages' first."; \
+		exit 1; \
+	fi
+	@age_key="$$HOME/.config/age/key.txt"; \
 	if [[ ! -f "$$age_key" ]]; then \
 		echo "Generating age key..."; \
 		mkdir -p "$$(dirname "$$age_key")"; \
 		age-keygen -o "$$age_key"; \
+		chmod 600 "$$age_key"; \
 		echo "✓ Age key generated: $$age_key"; \
 	else \
 		echo "✓ Age key already exists: $$age_key"; \
 	fi
-	@age_key="$$HOME/.config/sops/age/keys.txt"; \
+	@age_key="$$HOME/.config/age/key.txt"; \
+	public_key=$$(grep -o 'age1[a-zA-Z0-9]*' "$$age_key"); \
 	echo ""; \
-	echo "Your age public key (add this to .sops.yaml):"; \
-	grep -o 'age1[a-zA-Z0-9]*' "$$age_key"; \
+	echo "Your age public key: $$public_key"; \
 	echo ""; \
-	echo "💡 Edit .sops.yaml and replace 'age1...' with your public key above"
+	if grep -q "age1PLACEHOLDER" .sops.yaml; then \
+		echo "Updating .sops.yaml with your public key..."; \
+		sed -i.bak "s/age1PLACEHOLDER_REPLACE_WITH_YOUR_PUBLIC_KEY_AFTER_RUNNING_secrets_init/$$public_key/g" .sops.yaml; \
+		rm .sops.yaml.bak; \
+		echo "✓ .sops.yaml updated with your public key"; \
+	else \
+		echo "💡 .sops.yaml already configured or needs manual update"; \
+	fi
+	@echo ""; \
+	echo "✅ Secrets management initialized!"; \
+	echo ""; \
+	echo "Next steps:"; \
+	echo "  1. Create encrypted files: just secrets-edit secrets/env/example.sops.yaml"; \
+	echo "  2. Apply secrets: just secrets-apply"
 
 # Edit encrypted file with sops
 [group('secrets')]
@@ -151,10 +169,36 @@ secrets-edit f:
 [group('secrets')]
 secrets-apply:
 	@echo "🔓 Applying secrets..."
-	@if [[ -f "secrets/examples/ssh_config.sops.yaml" ]]; then \
-		echo "💡 Found SSH config example - implement decryption logic as needed"; \
+	@export SOPS_AGE_KEY_FILE="$$HOME/.config/age/key.txt"; \
+	mkdir -p "$$HOME/.local/share/secrets"; \
+	applied=0; \
+	for file in secrets/**/*.sops.yaml; do \
+		if [[ -f "$$file" && ! "$$file" =~ examples/ ]]; then \
+			echo "Decrypting: $$file"; \
+			basename=$$(basename "$$file" .sops.yaml); \
+			output="$$HOME/.local/share/secrets/$$basename.yaml"; \
+			if sops -d "$$file" > "$$output"; then \
+				echo "  ✓ Decrypted to: $$output"; \
+				((applied++)); \
+			else \
+				echo "  ✗ Failed to decrypt: $$file"; \
+			fi; \
+		fi; \
+	done; \
+	echo ""; \
+	if [[ $$applied -gt 0 ]]; then \
+		echo "✓ Applied $$applied secret files to ~/.local/share/secrets/"; \
+		echo "💡 Source them in your shell or applications as needed"; \
+	else \
+		echo "💡 No secret files found to apply (*.sops.yaml in secrets/ excluding examples/)"; \
 	fi
-	@echo "✓ Secrets applied (implement specific logic in justfile)"
+
+# Show decrypted content of a secret file
+[group('secrets')]
+secrets-show f:
+	@echo "👁️  Showing decrypted content: {{f}}"
+	@export SOPS_AGE_KEY_FILE="$$HOME/.config/age/key.txt"; \
+	sops -d "{{f}}"
 
 # Update everything (packages, dotfiles, secrets)
 update:
@@ -209,6 +253,7 @@ help:
 	@echo "Secrets Management:"
 	@echo "  secrets-init    Generate age keys"
 	@echo "  secrets-edit f= Edit encrypted file"
+	@echo "  secrets-show f= Show decrypted content"
 	@echo "  secrets-apply   Apply decrypted secrets"
 	@echo ""
 	@echo "Maintenance:"

@@ -2,8 +2,16 @@
 # XDG-compliant configuration
 
 [user]
+	# Default user configuration
 	# Set via: git config --global user.name "Your Name"
 	# Set via: git config --global user.email "your.email@example.com"
+
+# Conditional includes for different directories
+[includeIf "gitdir:~/work/"]
+	path = ~/.config/git/config-work
+
+[includeIf "gitdir:~/per/"]
+	path = ~/.config/git/config-personal
 
 [core]
 	editor = nvim
