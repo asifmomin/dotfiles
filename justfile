@@ -76,11 +76,11 @@ stow-apply:
 			echo "Applying package: $$name"; \
 			if output=$$(stow -d . -t ~ "$$name" 2>&1); then \
 				echo "  ✓ $$name applied successfully"; \
-				((applied++)); \
+				applied=$$((applied + 1)); \
 			else \
 				echo "  ✗ $$name failed to apply"; \
 				echo "$$output" | sed 's/^/    /'; \
-				((failed++)); \
+				failed=$$((failed + 1)); \
 			fi; \
 		fi; \
 	done; \
