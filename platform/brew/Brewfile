@@ -1,7 +1,7 @@
 # Homebrew Bundle file for dotfiles
 # Usage: brew bundle --file=platform/brew/Brewfile
 
-tap "homebrew/bundle"
+# homebrew/bundle is now part of Homebrew core, no tap needed
 tap "homebrew/cask-fonts"
 
 # Essential tools for dotfiles management
