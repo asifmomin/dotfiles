@@ -1,8 +1,8 @@
 # Homebrew Bundle file for dotfiles
 # Usage: brew bundle --file=platform/brew/Brewfile
 
-# homebrew/bundle is now part of Homebrew core, no tap needed
-tap "homebrew/cask-fonts"
+# Note: homebrew/bundle and homebrew/cask-fonts are deprecated
+# Both are now part of Homebrew core or migrated to homebrew/cask
 
 # Essential tools for dotfiles management
 brew "stow"         # Symlink farm manager
