@@ -118,6 +118,8 @@ install_system_deps() {
         
         if command_exists apt-get; then
             print_step "Installing build-essential via apt"
+            # Use -n flag to avoid prompting if sudo session is still active
+            sudo -n true 2>/dev/null || sudo -v
             sudo apt-get update -qq
             sudo apt-get install -y -qq build-essential || {
                 print_warning "Failed to install build-essential, continuing..."
@@ -258,7 +260,9 @@ check_sudo_access() {
         fi
         
         # Keep sudo alive for the duration of the script
-        while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+        # This runs in background and touches sudo every 50 seconds
+        ( while true; do sudo -v; sleep 50; done ) &
+        SUDO_KEEPALIVE_PID=$!
     fi
     
     return 0
@@ -318,6 +322,11 @@ main() {
     echo "  just secrets:init    # Setup secrets"
     echo "  just update          # Update everything"
     echo
+    
+    # Kill the sudo keepalive process if it exists
+    if [[ -n "${SUDO_KEEPALIVE_PID:-}" ]]; then
+        kill $SUDO_KEEPALIVE_PID 2>/dev/null || true
+    fi
 }
 
 # Handle script interruption
