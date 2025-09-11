@@ -142,7 +142,7 @@ fi
 # Quick edits
 alias zshrc='$EDITOR ~/.zshrc'
 alias vimrc='$EDITOR ~/.config/nvim/init.lua'
-alias hosts='sudo $EDITOR /etc/hosts'
+alias hosts='$EDITOR /etc/hosts'  # Note: May require sudo to edit
 
 # Process management
 alias pgrep='pgrep -fl'
@@ -205,7 +205,6 @@ alias cd5='cd ../../../../..'
 case "$OSTYPE" in
   darwin*)
     # macOS specific aliases
-    alias flushdns='sudo dscacheutil -flushcache'
     alias showfiles='defaults write com.apple.finder AppleShowAllFiles YES'
     alias hidefiles='defaults write com.apple.finder AppleShowAllFiles NO'
     alias finder='open -a Finder'

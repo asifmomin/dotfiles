@@ -148,7 +148,7 @@ The configuration sets these key variables:
 
 ### macOS
 - Uses Homebrew for package management
-- Includes macOS-specific aliases (flushdns, showfiles)
+- Includes macOS-specific aliases (showfiles, hidefiles)
 
 ### Linux
 - Works with any distribution
