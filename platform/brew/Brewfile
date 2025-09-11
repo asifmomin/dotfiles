@@ -36,6 +36,7 @@ brew "zoxide"       # Smart cd replacement
 brew "btop"         # Better top/htop
 brew "lazygit"      # Git TUI
 brew "tldr"         # Simplified man pages
+brew "glow"         # Terminal markdown renderer
 
 # Development utilities
 brew "mise"         # Runtime version manager (asdf alternative)

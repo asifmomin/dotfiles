@@ -43,6 +43,7 @@ just bootstrap
 - **Ripgrep** - Fast text search (via shell aliases)
 - **Fzf** - Fuzzy finder with Tokyo Night colors
 - **Zoxide** - Smart cd replacement (via shell functions)
+- **Glow** - Terminal markdown renderer with syntax highlighting
 
 ### Advanced Features
 - **SOPS + age** - Encrypted secrets management for API keys and credentials
