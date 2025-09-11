@@ -12,6 +12,8 @@ curl -fsSL https://raw.githubusercontent.com/asifmomin/dotfiles/main/bootstrap.s
 git clone https://github.com/asifmomin/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 just bootstrap
+
+# After bootstrap completes, close and restart your shell for changes to take effect
 ```
 
 ## Features
