@@ -4,13 +4,17 @@ set -euo pipefail
 
 echo "🐚 Setting up shell configuration..."
 
-# Check if Homebrew zsh exists
-HOMEBREW_ZSH="/home/linuxbrew/.linuxbrew/bin/zsh"
+# Check if Homebrew zsh exists (check user directory first)
+USER_HOMEBREW_ZSH="$HOME/.linuxbrew/bin/zsh"
+SYSTEM_HOMEBREW_ZSH="/home/linuxbrew/.linuxbrew/bin/zsh"
 SYSTEM_ZSH="/usr/bin/zsh"
 
-if [[ -x "$HOMEBREW_ZSH" ]]; then
-    TARGET_ZSH="$HOMEBREW_ZSH"
-    echo "Found Homebrew zsh: $HOMEBREW_ZSH"
+if [[ -x "$USER_HOMEBREW_ZSH" ]]; then
+    TARGET_ZSH="$USER_HOMEBREW_ZSH"
+    echo "Found Homebrew zsh (user): $USER_HOMEBREW_ZSH"
+elif [[ -x "$SYSTEM_HOMEBREW_ZSH" ]]; then
+    TARGET_ZSH="$SYSTEM_HOMEBREW_ZSH"
+    echo "Found Homebrew zsh (system): $SYSTEM_HOMEBREW_ZSH"
 elif [[ -x "$SYSTEM_ZSH" ]]; then
     TARGET_ZSH="$SYSTEM_ZSH"
     echo "Found system zsh: $SYSTEM_ZSH"

@@ -72,27 +72,23 @@ install_homebrew() {
     if [[ $(detect_platform) == "macos" ]]; then
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     else
-        # Linux/WSL - try standard location first, fall back to home directory
-        print_warning "Homebrew installation requires sudo access for /home/linuxbrew"
-        print_warning "You may be prompted for your password"
+        # Linux/WSL - Install to user's home directory (no sudo required)
+        print_step "Installing Homebrew to user directory (no sudo required)"
         
-        # Try to install with sudo if available
-        if command_exists sudo; then
-            # Create linuxbrew directory with sudo if it doesn't exist
-            sudo mkdir -p /home/linuxbrew
-            sudo chown -R "$USER:$(id -gn)" /home/linuxbrew
-        fi
+        # Set Homebrew to install in user's home directory
+        export HOMEBREW_PREFIX="$HOME/.linuxbrew"
         
-        # Install Homebrew
+        # Install Homebrew without sudo
         NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         
         # Add Homebrew to PATH for Linux/WSL
-        if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
-            echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> "$HOME/.profile"
-            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-        elif [[ -d "$HOME/.linuxbrew" ]]; then
+        if [[ -d "$HOME/.linuxbrew" ]]; then
             echo 'eval "$($HOME/.linuxbrew/bin/brew shellenv)"' >> "$HOME/.profile"
             eval "$($HOME/.linuxbrew/bin/brew shellenv)"
+        elif [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
+            # Fallback if it still installed to system location
+            echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> "$HOME/.profile"
+            eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
         fi
     fi
     
@@ -101,10 +97,10 @@ install_homebrew() {
 
 # Ensure Homebrew is in PATH
 ensure_brew_in_path() {
-    if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
-        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-    elif [[ -d "$HOME/.linuxbrew" ]]; then
+    if [[ -d "$HOME/.linuxbrew" ]]; then
         eval "$($HOME/.linuxbrew/bin/brew shellenv)"
+    elif [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
+        eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
     fi
 }
 
@@ -248,22 +244,22 @@ backup_configs() {
     fi
 }
 
-# Check sudo access for Linux/WSL
+# Check sudo access for Linux/WSL (optional, only for system packages)
 check_sudo_access() {
     local platform
     platform=$(detect_platform)
     
     if [[ "$platform" == "linux" ]] || [[ "$platform" == "wsl" ]]; then
         if ! command_exists sudo; then
-            print_error "sudo is required but not installed"
-            print_warning "Please install sudo or run this script as root"
+            print_warning "sudo not available - skipping system package installation"
+            print_warning "You may need to install build-essential manually if needed"
             return 1
         fi
         
-        print_step "Checking sudo access (you may be prompted for your password)"
+        print_step "Checking sudo access for optional system packages"
         if ! sudo -v; then
-            print_error "Unable to obtain sudo access"
-            print_warning "Please ensure you have sudo privileges and try again"
+            print_warning "Unable to obtain sudo access - continuing without system packages"
+            print_warning "You may need to install build-essential manually if needed"
             return 1
         fi
         
@@ -296,11 +292,6 @@ main() {
         exit 1
     fi
     
-    # Check sudo access for Linux/WSL
-    if ! check_sudo_access; then
-        exit 1
-    fi
-    
     # Run installation steps
     backup_configs
     install_homebrew
@@ -308,8 +299,19 @@ main() {
     # Ensure Homebrew is in PATH for the rest of the script
     ensure_brew_in_path
     
-    # Install system dependencies (build-essential on Linux/WSL)
-    install_system_deps
+    # Check sudo access for optional system packages (don't exit if unavailable)
+    local has_sudo=false
+    if check_sudo_access; then
+        has_sudo=true
+    fi
+    
+    # Install system dependencies only if sudo is available
+    if [[ "$has_sudo" == true ]]; then
+        install_system_deps
+    else
+        print_warning "Skipping system package installation (no sudo access)"
+        print_info "Homebrew will install most required dependencies"
+    fi
     
     install_essentials
     clone_dotfiles
