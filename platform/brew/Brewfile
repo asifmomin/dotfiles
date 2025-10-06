@@ -65,6 +65,11 @@ cask "font-fira-code-nerd-font"
 # Terminal emulator (cross-platform)
 cask "alacritty"
 
+# Code editor (macOS only - install manually on Linux/WSL)
+if OS.mac?
+  cask "visual-studio-code"
+end
+
 # Additional macOS-specific tools
 if OS.mac?
   brew "coreutils"  # GNU core utilities
