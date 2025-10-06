@@ -84,6 +84,58 @@ just status          # Show dotfiles status and info
 just edit            # Open dotfiles directory in editor
 ```
 
+## Shell Shortcuts & Aliases
+
+Commonly used shortcuts (full list in [Shell Aliases Reference](./packages/shell/ALIASES.md)):
+
+### Navigation
+```bash
+ls / lsa            # Enhanced listing with eza (icons, git status)
+lt / lta            # Tree view (2 levels deep)
+.. / ... / ....     # Navigate up 1/2/3 directories
+-                   # Go to previous directory
+```
+
+### File Operations
+```bash
+cat                 # Syntax-highlighted viewing with bat
+find                # Fast file search with fd
+grep                # Fast text search with ripgrep
+ff                  # Fuzzy finder with preview
+```
+
+### Git Workflow
+```bash
+g                   # git
+gst                 # git status
+ga / gaa            # git add / git add .
+gcm "msg"           # git commit -m "msg"
+gp / gpl            # git push / git pull
+gl                  # git log (formatted)
+gd                  # git diff
+```
+
+### Docker
+```bash
+d / dc              # docker / docker-compose
+dps / dpsa          # docker ps / docker ps -a
+dlog                # docker logs -f
+```
+
+### System Monitoring
+```bash
+top                 # btop (modern system monitor)
+du                  # dust (disk usage)
+```
+
+### Homebrew
+```bash
+brewup              # brew update && brew upgrade
+brewi / brews       # brew install / brew search
+```
+
+**See [Complete Aliases Reference](./packages/shell/ALIASES.md)** for all 60+ shortcuts and platform-specific commands.
+
 ## Platform Support
 
 - **macOS**: Full support via Homebrew

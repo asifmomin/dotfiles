@@ -50,6 +50,8 @@ shell/
 - Development tools (`d` → `docker`, `r` → `rails`)
 - System utilities and modern CLI replacements
 
+**See [ALIASES.md](./ALIASES.md)** for comprehensive list of all 60+ aliases.
+
 ### Functions (`functions.zsh`)
 - Smart navigation (`zd`, `mkcd`, `up`)
 - File operations (`extract`, `compress`, `n`)
