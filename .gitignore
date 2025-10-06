@@ -18,6 +18,9 @@ local/
 !packages/**/.local/
 packages/**/local.zsh
 
+# Package-specific runtime directories
+packages/alacritty/.local/
+
 # OS generated files
 .DS_Store
 .DS_Store?
