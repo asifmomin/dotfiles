@@ -1,5 +1,7 @@
 # Credits & Inspiration
 
+> Last Updated: January 2025
+
 ## Primary Inspiration
 
 This dotfiles configuration was heavily inspired by [Omarchy](https://github.com/basecamp/omarchy) by Basecamp.
@@ -35,6 +37,8 @@ This dotfiles setup leverages excellent open-source projects:
 - **[Tmux](https://github.com/tmux/tmux)** - Terminal multiplexer
 - **[Alacritty](https://alacritty.org/)** - GPU-accelerated terminal
 - **[Starship](https://starship.rs/)** - Cross-shell prompt
+- **[mise](https://mise.jdx.dev/)** - Runtime version manager (replaces nvm, rbenv, pyenv)
+- **[direnv](https://direnv.net/)** - Per-directory environment management
 
 ### Modern CLI Tools
 - **[eza](https://github.com/eza-community/eza)** - Modern ls replacement

@@ -1,6 +1,33 @@
 # Git Directory-Based Identity Switching
 
+> Automatically switch Git identity based on project directory
+
 Automatic Git configuration switching based on project location for seamless work/personal repository management.
+
+## Quick Setup (2 minutes)
+
+```bash
+# 1. Create directories
+mkdir -p ~/work ~/per
+
+# 2. Configure work identity
+git config --file ~/.config/git/config-work user.name "Work Name"
+git config --file ~/.config/git/config-work user.email "work@company.com"
+
+# 3. Configure personal identity
+git config --file ~/.config/git/config-personal user.name "Personal Name"
+git config --file ~/.config/git/config-personal user.email "personal@email.com"
+
+# 4. Test it
+cd ~/work && git config user.email  # Shows work email
+cd ~/per && git config user.email   # Shows personal email
+```
+
+**That's it!** Now `~/work/*` uses work identity, `~/per/*` uses personal identity.
+
+---
+
+## Detailed Guide
 
 ## Overview
 

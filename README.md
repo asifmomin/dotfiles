@@ -1,6 +1,8 @@
 # Dotfiles
 
-> Modern, cross-platform development environment with Tokyo Night theme and Omarchy-inspired minimal design
+> Modern, cross-platform development environment with Tokyo Night theme and minimal design
+
+**Inspired by [Omarchy](https://github.com/basecamp/omarchy)** - Extending its minimal philosophy with modern development workflows.
 
 ## Quick Start
 
@@ -15,6 +17,29 @@ just bootstrap
 
 # After bootstrap completes, close and restart your shell for changes to take effect
 ```
+
+## Why This Dotfiles?
+
+### Simple & Fast
+- **One-line installation** - Productive in under 5 minutes
+- **Minimal configuration** - Trust tool defaults, inspired by Omarchy
+- **Cross-platform** - Identical experience on macOS, Linux, and WSL
+
+### Modern & Productive
+- **Modern CLI tools** - eza, bat, ripgrep, fzf, zoxide, and more
+- **Tokyo Night everywhere** - Consistent professional theme
+- **Runtime management** - mise for automatic version switching
+- **Smart environments** - direnv for per-project configuration
+
+### Secure by Default
+- **Encrypted secrets** - SOPS + age for credential management
+- **Git identity switching** - Automatic work/personal separation
+- **No plaintext credentials** - Secure from the start
+
+### Team-Friendly
+- **Easy to share** - Fork and customize for your team
+- **Well documented** - Comprehensive guides and examples
+- **Omarchy-inspired** - Proven minimal philosophy, extended for modern workflows
 
 ## Features
 
@@ -33,7 +58,8 @@ just bootstrap
 - **Neovim** - LazyVim configuration following Omarchy's minimal approach
 - **Git** - Directory-based identity switching (work/personal) + Tokyo Night colors
 - **Tmux** - Terminal multiplexer with Tokyo Night theme and vim-like bindings
-- **Direnv** - Directory-based environment management for projects
+- **mise** - Runtime version manager (replaces nvm, rbenv, pyenv, etc.)
+- **Direnv** - Per-directory environment management for projects
 
 ### Modern CLI Tools
 - **Bat** - Syntax-highlighted file viewer with Tokyo Night theme
@@ -136,6 +162,51 @@ brewi / brews       # brew install / brew search
 
 **See [Complete Aliases Reference](./packages/shell/ALIASES.md)** for all 60+ shortcuts and platform-specific commands.
 
+## Quick Reference
+
+### Essential Commands
+```bash
+just bootstrap        # Initial setup (first time only)
+just doctor          # Health check all tools
+just stow-apply      # Apply configurations
+just update          # Update packages and dotfiles
+```
+
+### Common Workflows
+
+**Git Identity Switching**
+```bash
+# Setup once
+mkdir -p ~/work ~/per
+git config --file ~/.config/git/config-work user.email "work@company.com"
+git config --file ~/.config/git/config-personal user.email "personal@email.com"
+
+# Use automatically
+cd ~/work/my-project   # Uses work identity
+cd ~/per/side-project  # Uses personal identity
+```
+
+**Runtime Version Management (mise)**
+```bash
+# In your project directory
+echo "node 20.10.0" > .tool-versions
+echo "python 3.12.0" >> .tool-versions
+
+# Versions auto-switch when you cd into directory
+```
+
+**Secrets Management**
+```bash
+just secrets-init                           # Generate encryption keys
+just secrets-edit f=secrets/env/api.sops.yaml  # Create encrypted secret
+just secrets-apply                          # Decrypt for use
+```
+
+**Quick Links**
+- [Quick Start Guide](./docs/QUICKSTART.md) - Get running in 5 minutes
+- [Shell Customization](./packages/shell/README.md#customization)
+- [FAQ](./docs/FAQ.md) - Common questions
+
 ## Platform Support
 
 - **macOS**: Full support via Homebrew
@@ -145,11 +216,19 @@ brewi / brews       # brew install / brew search
 
 ## Documentation
 
-See [docs/](./docs/) for detailed documentation:
-- [Installation Instructions](./docs/instructions.md)
-- [Philosophy & Design Principles](./docs/PHILOSOPHY.md)
-- [Git Directory Switching](./docs/git-directory-switching.md)
-- [Credits & Inspiration](./docs/CREDITS.md)
+**Getting Started:**
+- [Quick Start Guide](./docs/QUICKSTART.md) - Get running in 5 minutes
+- [Installation Instructions](./docs/instructions.md) - Detailed setup guide
+- [FAQ](./docs/FAQ.md) - Common questions and troubleshooting
+
+**Configuration:**
+- [Git Directory Switching](./docs/git-directory-switching.md) - Automatic work/personal identity
+- [Shell Aliases Reference](./packages/shell/ALIASES.md) - All 60+ shortcuts
+- [Shell Functions](./packages/shell/README.md) - Custom shell functions
+
+**About:**
+- [Philosophy & Design Principles](./docs/PHILOSOPHY.md) - Design decisions
+- [Credits & Inspiration](./docs/CREDITS.md) - Omarchy and tools used
 
 ## License
 

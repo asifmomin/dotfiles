@@ -1,6 +1,8 @@
 # Installation & Setup Instructions
 
-Complete guide for installing and configuring the dotfiles system on any supported platform.
+Complete guide for installing and configuring the dotfiles system.
+
+> **Quick Start?** See [QUICKSTART.md](./QUICKSTART.md) for a 5-minute setup guide.
 
 ## Prerequisites
 
@@ -9,7 +11,7 @@ Complete guide for installing and configuring the dotfiles system on any support
 - **Operating System**: macOS, Linux, or WSL
 - **Required Tools**: git, curl (usually pre-installed)
 - **Network**: Internet connection for downloading packages
-- **Permissions**: Ability to install software (sudo/admin access)
+- **Permissions**: Ability to install software (sudo for `chsh` only)
 
 ### Supported Platforms
 
@@ -35,7 +37,12 @@ This will:
 2. Clone the dotfiles repository to `~/dotfiles`
 3. Install all required packages
 4. Apply all configuration packages via stow
-5. Initialize secrets management
+5. Setup shell environment
+
+**After installation completes, restart your shell:**
+```bash
+exec zsh
+```
 
 ### Method 2: Manual Installation
 
@@ -48,7 +55,7 @@ cd ~/dotfiles
 just bootstrap
 
 # 3. Restart your shell
-exec $SHELL
+exec zsh
 ```
 
 ### Method 3: Step-by-Step Installation
@@ -76,7 +83,7 @@ just secrets-init
 just doctor
 
 # 7. Restart shell
-exec $SHELL
+exec zsh
 ```
 
 ## Post-Installation Setup
@@ -89,19 +96,23 @@ git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"
 ```
 
-#### Work Directory Setup (Optional)
+#### Directory-Based Identity (Recommended)
+
+Setup automatic work/personal identity switching:
+
 ```bash
+# Work identity
 mkdir -p ~/work
-git config --file ~/.config/git/config-work user.name "Your Work Name"
+git config --file ~/.config/git/config-work user.name "Work Name"
 git config --file ~/.config/git/config-work user.email "work@company.com"
+
+# Personal identity
+mkdir -p ~/per
+git config --file ~/.config/git/config-personal user.name "Personal Name"
+git config --file ~/.config/git/config-personal user.email "personal@email.com"
 ```
 
-#### Personal Directory Setup (Optional)
-```bash
-mkdir -p ~/per
-git config --file ~/.config/git/config-personal user.name "Your Personal Name"
-git config --file ~/.config/git/config-personal user.email "personal@gmail.com"
-```
+See [Git Directory Switching](./git-directory-switching.md) for detailed guide.
 
 ### 2. Setup Secrets Management (Optional)
 
@@ -110,72 +121,67 @@ git config --file ~/.config/git/config-personal user.email "personal@gmail.com"
 just secrets-init
 
 # Create your first secret file
-just secrets-edit secrets/env/github.sops.yaml
+just secrets-edit f=secrets/env/github.sops.yaml
+
+# Add your secrets (file opens in editor)
+GITHUB_TOKEN=ghp_xxxxx
+API_KEY=xxxxx
 
 # Apply secrets
 just secrets-apply
 ```
 
-### 3. Configure Shell as Default
+### 3. Set Zsh as Default Shell
 
-#### Zsh as Default Shell
 ```bash
-# Add zsh to valid login shells
+# Add zsh to valid login shells (if needed)
 echo $(which zsh) | sudo tee -a /etc/shells
 
 # Change default shell
 chsh -s $(which zsh)
-```
 
-### 4. Terminal Configuration
-
-#### Alacritty Setup
-- Alacritty config is automatically applied via stow
-- Font: CaskaydiaMono Nerd Font (installed via Homebrew)
-- Theme: Tokyo Night with transparency
-
-#### Terminal Font
-If you prefer a different terminal, install the required font:
-```bash
-# Font is already installed via Homebrew
-# For other terminals, configure to use: CaskaydiaMono Nerd Font
+# Restart terminal
 ```
 
 ## Customization
 
-### 1. Personal Shell Customizations
+### Personal Shell Configuration
+
+Create `~/.config/zsh/local.zsh` for personal customizations:
 
 ```bash
-# Copy example local config
+# Copy example config
 cp ~/.config/zsh/local.zsh.example ~/.config/zsh/local.zsh
 
 # Edit with your customizations
 nvim ~/.config/zsh/local.zsh
 ```
 
-Example `local.zsh`:
+Example customizations:
 ```bash
 # Personal aliases
 alias work='cd ~/work'
 alias projects='cd ~/projects'
 
-# Custom environment variables
+# Environment variables
 export EDITOR="code"  # Use VS Code instead of Neovim
 
 # Custom functions
 deploy() {
     echo "Deploying to $1..."
-    # Your deployment logic
+    # Your logic here
 }
 ```
 
-### 2. Starship Prompt Customization
+### Prompt Customization
+
+Switch between prompt styles:
 
 ```bash
-# Switch to minimal prompt (Omarchy style)
+# Minimal prompt (Omarchy-style)
 prompt-switch minimal
 
-# Switch to full-featured prompt
+# Full-featured prompt
 prompt-switch full
 
 # Create custom prompt
@@ -184,71 +190,39 @@ nvim ~/.config/starship-custom.toml
 prompt-switch custom
 ```
 
-### 3. Neovim Customization
+### Runtime Version Management (mise)
 
-Following Omarchy's philosophy, customizations should be minimal:
-
-```bash
-# Create personal overrides (if needed)
-nvim ~/.config/nvim/lua/plugins/personal.lua
-```
-
-Example minimal customization:
-```lua
--- lua/plugins/personal.lua
-return {
-  -- Add only essential personal plugins
-}
-```
-
-### 4. Git Configuration
-
-#### Additional Git Aliases
-```bash
-# Add to ~/.config/git/config
-[alias]
-    pushf = push --force-with-lease
-    wip = commit -am "WIP"
-```
-
-#### GPG Signing (Advanced)
-```bash
-# Configure GPG signing
-git config --global user.signingkey YOUR_GPG_KEY_ID
-git config --global commit.gpgsign true
-```
-
-## Platform-Specific Setup
-
-### macOS Additional Steps
+Use mise for automatic language version management:
 
 ```bash
-# Install additional macOS apps (optional)
-brew install --cask iterm2 visual-studio-code
+# In your project directory
+cd ~/work/my-project
 
-# Configure macOS defaults (optional)
-defaults write com.apple.dock autohide -bool true
-defaults write com.apple.finder ShowPathbar -bool true
+# Specify versions in .tool-versions
+echo "node 20.10.0" > .tool-versions
+echo "python 3.12.0" >> .tool-versions
+echo "ruby 3.3.0" >> .tool-versions
+
+# mise automatically installs and switches versions when you cd
 ```
 
-### Linux Additional Steps
+### Per-Directory Environments (direnv)
+
+Create project-specific environments:
 
 ```bash
-# Install clipboard utilities for pbcopy/pbpaste aliases
-# (Usually installed automatically via Brewfile)
+# In your project directory
+cd ~/work/my-project
 
-# Configure desktop environment (varies by distribution)
-# The dotfiles work with any desktop environment
-```
+# Create .envrc file
+cat > .envrc << 'EOF'
+export DATABASE_URL=postgresql://localhost/mydb
+export API_KEY=$(cat ~/.local/share/secrets/api-key.txt)
+layout python3  # Activates Python virtualenv
+EOF
 
-### WSL Additional Steps
-
-```bash
-# Configure Windows Terminal (optional)
-# The dotfiles include Windows Terminal integration
-
-# Set up Windows integration
-# Windows commands are available via shell aliases
+# Allow direnv to load
+direnv allow
 ```
 
 ## Verification
@@ -262,69 +236,69 @@ just doctor
 
 Expected output:
 ```
-🔍 Running dotfiles health check...
-
-Platform: linux ✓
-
-Required tools:
-  git: ✓
-  stow: ✓
-  brew: ✓
-  zsh: ✓
-  starship: ✓
-  nvim: ✓
-
-Optional tools:
-  just: ✓
-  sops: ✓
-  age: ✓
-  fzf: ✓
-  ripgrep: ✓
-  bat: ✓
-  eza: ✓
-  fd: ✓
-  btop: ✓
-  tmux: ✓
+✓ Platform detected: linux
+✓ All required tools installed
+✓ Configuration files linked
+✓ Shell environment ready
 ```
 
-### Manual Verification
+### Manual Testing
 
 ```bash
 # Test shell functionality
 echo $SHELL  # Should show zsh path
-which starship  # Should show starship path
+which starship eza bat  # Should show installed tools
 
-# Test git configuration
+# Test Git directory switching
 cd ~/work && git config user.email  # Should show work email
 cd ~/per && git config user.email   # Should show personal email
 
-# Test theme consistency
-bat --theme  # Should show TwoDark
-btop  # Should show Tokyo Night theme (press 'q' to quit)
+# Test modern CLI tools
+ls  # Enhanced with eza
+cat README.md  # Enhanced with bat
+```
 
-# Test secrets (if configured)
-just secrets-show secrets/examples/github-tokens.sops.yaml
+## Platform-Specific Notes
+
+### macOS
+
+```bash
+# Install additional macOS apps (optional)
+brew install --cask visual-studio-code iterm2
+
+# Configure macOS defaults (optional)
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.finder ShowPathbar -bool true
+```
+
+### Linux
+
+```bash
+# Clipboard utilities installed automatically
+# pbcopy/pbpaste aliases work via xclip
+
+# The dotfiles work with any desktop environment
+```
+
+### WSL
+
+```bash
+# Windows integration commands available
+explorer .  # Open Windows Explorer
+cmd         # Open Windows CMD
+powershell  # Open PowerShell
+
+# Configure Windows Terminal for best experience
 ```
 
 ## Troubleshooting
 
 ### Common Issues
 
-#### 1. Stow Conflicts
-**Problem**: Existing files conflict with stow packages
-**Solution**: 
-```bash
-# Back up existing configs
-mkdir ~/dotfiles-backup
-mv ~/.zshrc ~/dotfiles-backup/
-mv ~/.config/nvim ~/dotfiles-backup/
+#### Shell Not Changing
 
-# Retry stow
-just stow-apply
-```
-
-#### 2. Shell Not Changing
 **Problem**: Default shell remains bash
+
 **Solution**:
 ```bash
 # Verify zsh is in valid shells
@@ -333,59 +307,72 @@ cat /etc/shells | grep zsh
 # Add if missing
 echo $(which zsh) | sudo tee -a /etc/shells
 
-# Change shell
+# Change shell and restart terminal
 chsh -s $(which zsh)
-
-# Restart terminal
 ```
 
-#### 3. Homebrew Installation Failed
-**Problem**: Homebrew installation fails
+#### Stow Conflicts
+
+**Problem**: Existing files conflict with stow packages
+
+**Solution**:
+```bash
+# Back up existing configs
+mkdir ~/dotfiles-backup
+mv ~/.zshrc ~/.config/nvim ~/dotfiles-backup/
+
+# Retry stow
+just stow-apply
+```
+
+#### Homebrew Issues
+
+**Problem**: Homebrew not found or installation failed
+
 **Solution**:
 ```bash
 # Install Homebrew manually
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# Add to PATH (Linux/WSL)
-echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# Add to PATH
+eval "$(/opt/homebrew/bin/brew shellenv)"  # macOS
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"  # Linux/WSL
 
 # Retry bootstrap
 just bootstrap
 ```
 
-#### 4. Font Issues
+#### Font/Icon Issues
+
 **Problem**: Terminal shows squares instead of icons
+
 **Solution**:
-```bash
-# Verify font installation
-brew list | grep font-caskaydia
+- Configure your terminal to use **CaskaydiaMono Nerd Font**
+- Font is already installed via Homebrew
+- For Alacritty, font is pre-configured
 
-# Configure terminal to use CaskaydiaMono Nerd Font
-# Instructions vary by terminal application
-```
+#### Git Identity Not Switching
 
-#### 5. Git Directory Switching Not Working
 **Problem**: Git identity doesn't switch by directory
+
 **Solution**:
 ```bash
 # Check Git version (requires 2.13+)
 git --version
 
-# Test conditional includes
-cd ~/work && git config --list --show-origin | grep user
-
 # Verify config files exist
 ls ~/.config/git/config*
+
+# Test conditional includes
+cd ~/work && git config --list | grep user
 ```
 
 ### Getting Help
 
-1. **Check documentation**: See other files in `docs/`
+1. **Check FAQ**: See [FAQ.md](./FAQ.md) for common questions
 2. **Run health check**: `just doctor`
-3. **Check git history**: Recent changes and solutions
-4. **File issues**: Create GitHub issues for bugs
-5. **Check logs**: `~/.local/state/zsh/history` for shell issues
+3. **Review documentation**: Check other docs in `docs/`
+4. **File an issue**: [GitHub Issues](https://github.com/asifmomin/dotfiles/issues)
 
 ### Recovery
 
@@ -406,14 +393,50 @@ rm -rf ~/dotfiles
 # Run installation again
 ```
 
+## Advanced Configuration
+
+### Different SSH Keys for Work/Personal
+
+```bash
+# Work SSH key
+git config --file ~/.config/git/config-work core.sshCommand "ssh -i ~/.ssh/id_work"
+
+# Personal SSH key
+git config --file ~/.config/git/config-personal core.sshCommand "ssh -i ~/.ssh/id_personal"
+```
+
+### GPG Commit Signing
+
+```bash
+# Configure GPG signing
+git config --global user.signingkey YOUR_GPG_KEY_ID
+git config --global commit.gpgsign true
+```
+
+### Selective Package Installation
+
+```bash
+# Apply only specific packages
+stow -d packages -t ~ shell  # Only shell configs
+stow -d packages -t ~ git    # Only git configs
+stow -d packages -t ~ neovim # Only neovim configs
+
+# Remove specific package
+stow -d packages -t ~ -D tmux
+```
+
 ## Next Steps
 
 After successful installation:
 
-1. **Explore tools**: Try `bat`, `eza`, `btop`, etc.
-2. **Create projects**: Test direnv with `mkdir ~/work/test-project`
-3. **Setup secrets**: Configure encrypted secrets for your workflow
-4. **Customize**: Add personal touches via local configs
-5. **Share**: Fork and adapt for your team's needs
+1. **Explore the tools** - Try the enhanced CLI experience
+2. **Create projects** - Test mise and direnv in real projects
+3. **Setup secrets** - Configure encrypted secrets for your workflow
+4. **Customize** - Add personal touches via local configs
+5. **Share** - Fork and adapt for your team
 
-The dotfiles system is designed to be a solid foundation that you can build upon while maintaining the core minimal philosophy inspired by Omarchy.
+See [QUICKSTART.md](./QUICKSTART.md) for quick commands and [FAQ.md](./FAQ.md) for common questions.
+
+---
+
+The dotfiles system provides a solid foundation inspired by Omarchy's minimal philosophy while supporting modern development workflows.
