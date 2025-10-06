@@ -2,26 +2,52 @@
 
 set -euo pipefail
 
+# Get the script directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+# Source platform detection
+# shellcheck source=../platform.sh
+source "$SCRIPT_DIR/platform.sh"
+
 echo "🐚 Setting up shell configuration..."
 
-# Check if Homebrew zsh exists (check user directory first)
-USER_HOMEBREW_ZSH="$HOME/.linuxbrew/bin/zsh"
-SYSTEM_HOMEBREW_ZSH="/home/linuxbrew/.linuxbrew/bin/zsh"
-SYSTEM_ZSH="/usr/bin/zsh"
+# Check for zsh in platform-specific locations
+if is_macos; then
+    # macOS: Check Homebrew first, then system zsh
+    MACOS_HOMEBREW_ZSH="/opt/homebrew/bin/zsh"
+    MACOS_SYSTEM_ZSH="/bin/zsh"
 
-if [[ -x "$USER_HOMEBREW_ZSH" ]]; then
-    TARGET_ZSH="$USER_HOMEBREW_ZSH"
-    echo "Found Homebrew zsh (user): $USER_HOMEBREW_ZSH"
-elif [[ -x "$SYSTEM_HOMEBREW_ZSH" ]]; then
-    TARGET_ZSH="$SYSTEM_HOMEBREW_ZSH"
-    echo "Found Homebrew zsh (system): $SYSTEM_HOMEBREW_ZSH"
-elif [[ -x "$SYSTEM_ZSH" ]]; then
-    TARGET_ZSH="$SYSTEM_ZSH"
-    echo "Found system zsh: $SYSTEM_ZSH"
+    if [[ -x "$MACOS_HOMEBREW_ZSH" ]]; then
+        TARGET_ZSH="$MACOS_HOMEBREW_ZSH"
+        echo "Found Homebrew zsh: $MACOS_HOMEBREW_ZSH"
+    elif [[ -x "$MACOS_SYSTEM_ZSH" ]]; then
+        TARGET_ZSH="$MACOS_SYSTEM_ZSH"
+        echo "Found system zsh: $MACOS_SYSTEM_ZSH"
+    else
+        echo "❌ No zsh installation found"
+        echo "Please install zsh: brew install zsh (or use built-in at /bin/zsh)"
+        exit 1
+    fi
 else
-    echo "❌ No zsh installation found"
-    echo "Please install zsh first: brew install zsh"
-    exit 1
+    # Linux/WSL: Check user Homebrew first, then system Homebrew, then system zsh
+    USER_HOMEBREW_ZSH="$HOME/.linuxbrew/bin/zsh"
+    SYSTEM_HOMEBREW_ZSH="/home/linuxbrew/.linuxbrew/bin/zsh"
+    SYSTEM_ZSH="/usr/bin/zsh"
+
+    if [[ -x "$USER_HOMEBREW_ZSH" ]]; then
+        TARGET_ZSH="$USER_HOMEBREW_ZSH"
+        echo "Found Homebrew zsh (user): $USER_HOMEBREW_ZSH"
+    elif [[ -x "$SYSTEM_HOMEBREW_ZSH" ]]; then
+        TARGET_ZSH="$SYSTEM_HOMEBREW_ZSH"
+        echo "Found Homebrew zsh (system): $SYSTEM_HOMEBREW_ZSH"
+    elif [[ -x "$SYSTEM_ZSH" ]]; then
+        TARGET_ZSH="$SYSTEM_ZSH"
+        echo "Found system zsh: $SYSTEM_ZSH"
+    else
+        echo "❌ No zsh installation found"
+        echo "Please install zsh first: brew install zsh"
+        exit 1
+    fi
 fi
 
 # Check if already in /etc/shells
@@ -41,8 +67,13 @@ else
     exit 0
 fi
 
-# Check current shell
-CURRENT_SHELL=$(getent passwd "$USER" | cut -d: -f7)
+# Check current shell (platform-specific)
+if is_macos; then
+    CURRENT_SHELL=$(dscl . -read "/Users/$USER" UserShell | awk '{print $2}')
+else
+    CURRENT_SHELL=$(getent passwd "$USER" | cut -d: -f7)
+fi
+
 if [[ "$CURRENT_SHELL" == "$TARGET_ZSH" ]]; then
     echo "✓ $TARGET_ZSH is already your default shell"
     echo "💡 Restart your terminal to ensure all configuration is loaded"

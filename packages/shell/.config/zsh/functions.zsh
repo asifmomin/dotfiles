@@ -340,16 +340,6 @@ genpass() {
   fi
 }
 
-# Weather information
-weather() {
-  local location=${1:-}
-  if command -v curl >/dev/null 2>&1; then
-    curl -s "wttr.in/${location}?format=3"
-  else
-    echo "curl required for weather"
-  fi
-}
-
 # QR code generator
 qr() {
   if [[ -z "$1" ]]; then

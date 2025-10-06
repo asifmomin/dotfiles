@@ -37,8 +37,7 @@ else
 fi
 
 # Archive operations
-alias compress='tar -czf'
-alias decompress='tar -xzf'
+# Note: compress() and extract() functions are defined in functions.zsh
 
 # File finding and searching
 if command -v fd >/dev/null 2>&1; then
@@ -154,12 +153,6 @@ alias diskinfo='df -h'
 
 # Calendar
 alias cal='cal -3'  # Show 3 months
-
-# Weather (if installed)
-if command -v curl >/dev/null 2>&1; then
-  alias weather='curl -s "wttr.in/?format=3"'
-  alias forecast='curl -s "wttr.in"'
-fi
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Safety Aliases
