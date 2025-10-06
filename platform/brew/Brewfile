@@ -68,6 +68,7 @@ cask "alacritty"
 # Code editor (macOS only - install manually on Linux/WSL)
 if OS.mac?
   cask "visual-studio-code"
+  cask "obsidian"
 end
 
 # Additional macOS-specific tools
