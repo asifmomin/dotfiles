@@ -18,29 +18,6 @@ just bootstrap
 # After bootstrap completes, close and restart your shell for changes to take effect
 ```
 
-## Why This Dotfiles?
-
-### Simple & Fast
-- **One-line installation** - Productive in under 5 minutes
-- **Minimal configuration** - Trust tool defaults, inspired by Omarchy
-- **Cross-platform** - Identical experience on macOS, Linux, and WSL
-
-### Modern & Productive
-- **Modern CLI tools** - eza, bat, ripgrep, fzf, zoxide, and more
-- **Tokyo Night everywhere** - Consistent professional theme
-- **Runtime management** - mise for automatic version switching
-- **Smart environments** - direnv for per-project configuration
-
-### Secure by Default
-- **Encrypted secrets** - SOPS + age for credential management
-- **Git identity switching** - Automatic work/personal separation
-- **No plaintext credentials** - Secure from the start
-
-### Team-Friendly
-- **Easy to share** - Fork and customize for your team
-- **Well documented** - Comprehensive guides and examples
-- **Omarchy-inspired** - Proven minimal philosophy, extended for modern workflows
-
 ## Features
 
 - 🎨 **Tokyo Night theme** - Consistent colors across all applications
