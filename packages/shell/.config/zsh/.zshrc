@@ -149,8 +149,9 @@ fi
 # ─────────────────────────────────────────────────────────────────────────────
 # Welcome Message
 # ─────────────────────────────────────────────────────────────────────────────
-if [[ -o interactive ]]; then
-  if command -v fastfetch >/dev/null 2>&1; then
-    fastfetch --logo small
-  fi
-fi
+# Disabled - uncomment to show system info on startup
+# if [[ -o interactive ]]; then
+#   if command -v fastfetch >/dev/null 2>&1; then
+#     fastfetch --logo small
+#   fi
+# fi
