@@ -147,9 +147,9 @@ brewi / brews       # brew install / brew search
 
 See [docs/](./docs/) for detailed documentation:
 - [Installation Instructions](./docs/instructions.md)
-- [Goals & Philosophy](./docs/goals.md)
-- [Workspace Context](./docs/workspace-context.md)
-- [Guardrails](./docs/guardrails.md)
+- [Philosophy & Design Principles](./docs/PHILOSOPHY.md)
+- [Git Directory Switching](./docs/git-directory-switching.md)
+- [Credits & Inspiration](./docs/CREDITS.md)
 
 ## License
 

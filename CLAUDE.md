@@ -435,8 +435,10 @@ exec zsh
 ## Additional Resources
 
 - **Documentation:** See `docs/` directory
-  - `workspace-context.md` - Architecture and integration details
-  - `guardrails.md` - Design principles and constraints
+  - `PHILOSOPHY.md` - Design principles and philosophy
+  - `instructions.md` - Installation and setup guide
+  - `git-directory-switching.md` - Git identity switching setup
+  - `CREDITS.md` - Credits and tool acknowledgments
 - **Package READMEs:** Each package has detailed documentation
-- **Omarchy Reference:** https://github.com/2KAbhishek/omarchy
+- **Omarchy Reference:** https://github.com/basecamp/omarchy
 - **Tokyo Night Theme:** https://github.com/enkia/tokyo-night-vscode-theme

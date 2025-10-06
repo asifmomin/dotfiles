@@ -157,4 +157,4 @@ This results in a robust, fast, and beautiful Neovim setup with minimal effort.
 
 - [LazyVim Documentation](https://lazyvim.github.io/)
 - [Tokyo Night Theme](https://github.com/folke/tokyonight.nvim)
-- [Omarchy](https://github.com/2KAbhishek/omarchy)
+- [Omarchy](https://github.com/basecamp/omarchy)
