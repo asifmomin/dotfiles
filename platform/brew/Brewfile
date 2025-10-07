@@ -69,6 +69,7 @@ cask "alacritty"
 if OS.mac?
   cask "visual-studio-code"
   cask "obsidian"
+  cask "rectangle"
 end
 
 # Additional macOS-specific tools
