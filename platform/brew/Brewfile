@@ -70,6 +70,7 @@ if OS.mac?
   cask "visual-studio-code"
   cask "obsidian"
   cask "rectangle"
+  cask "flycut"
 end
 
 # Additional macOS-specific tools
