@@ -91,7 +91,8 @@ dotfiles/
 │   ├── alacritty/    # Terminal emulator config
 │   ├── bat/          # Syntax-highlighted cat replacement
 │   ├── btop/         # System monitor with custom theme
-│   └── direnv/       # Per-directory environment management
+│   ├── direnv/       # Per-directory environment management
+│   └── mise/         # Runtime version manager (Python, Node.js, etc.)
 │
 ├── lib/              # Helper libraries
 │   ├── platform.sh   # Platform detection utilities
@@ -224,6 +225,86 @@ Ultra-minimal LazyVim setup (Omarchy-inspired):
 - No animations (performance)
 
 Located in `packages/neovim/.config/nvim/`
+
+### 6. Python Management with Mise
+
+**Python LTS (3.12)** is automatically installed and managed via mise:
+
+**Key Features:**
+- **Python 3.12 LTS** - Installed globally by default
+- **Per-project versions** - Use `.mise.toml` for project-specific Python versions
+- **Virtual environments** - Seamless integration with venv and direnv
+- **Cross-platform** - Works identically on macOS, Linux, and WSL
+
+**Configuration:**
+- Global config: `packages/mise/.config/mise/config.toml`
+- Activated automatically on shell startup
+- Python environment variables set for optimal development
+
+**Using Python:**
+```bash
+# Check Python version
+python --version  # Should show Python 3.12.x
+
+# List installed Python versions
+mise list python
+
+# Install additional Python versions
+mise use python@3.11
+
+# Per-project Python with direnv
+echo 'layout_python 3.12' > .envrc
+direnv allow
+```
+
+**With Virtual Environments:**
+```bash
+# Create venv (standard method)
+python -m venv .venv
+source .venv/bin/activate
+
+# Or use direnv (automatic activation)
+# Add to .envrc:
+layout_python 3.12  # Creates and activates .venv automatically
+```
+
+**Environment Variables:**
+- `PYTHONDONTWRITEBYTECODE=1` - No .pyc files
+- `PYTHONUNBUFFERED=1` - Unbuffered output for better logging
+
+### 7. Node.js Package Management with Corepack + pnpm
+
+**Corepack** is automatically enabled to manage package managers (npm, pnpm, yarn):
+
+**Key Features:**
+- **No global installs needed** - pnpm available immediately via corepack
+- **Project-specific versions** - Respects `packageManager` field in `package.json`
+- **Consistent environments** - Same package manager version across team/CI
+
+**Configuration:**
+- Enabled automatically on shell startup (see `packages/shell/.config/zsh/.zshrc:149`)
+- Node.js managed via mise (see `mise list` for installed versions)
+- Corepack comes bundled with Node.js v16.9.0+
+
+**Using pnpm:**
+```bash
+# pnpm is immediately available (no installation needed)
+pnpm install
+pnpm add <package>
+
+# Specify version in package.json (optional)
+{
+  "packageManager": "pnpm@9.0.0"
+}
+```
+
+**Why pnpm?**
+- 2-3x faster than npm
+- Minimal disk usage (content-addressable store)
+- Strict dependency resolution (prevents phantom dependencies)
+- Best-in-class monorepo support
+
+**Fallback to npm:** npm still works as usual, use whatever the project requires.
 
 ## Important Conventions
 

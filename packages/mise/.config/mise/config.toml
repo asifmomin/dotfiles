@@ -1,0 +1,34 @@
+# Mise Configuration
+# Runtime version manager for Node.js, Python, Go, and more
+# https://mise.jdx.dev
+
+# Global tools installed across all projects
+[tools]
+# Node.js LTS (managed via corepack for package managers)
+node = "lts"
+
+# Python LTS (currently 3.12)
+python = "3.12"
+
+# Settings
+[settings]
+# Enable experimental features
+experimental = false
+
+# Always use the latest stable version of tools
+always_keep_download = false
+
+# Verbose output for debugging (set to true if needed)
+verbose = false
+
+# Environment variables
+[env]
+# Python-specific settings
+# Prevent Python from writing .pyc files
+PYTHONDONTWRITEBYTECODE = "1"
+
+# Python unbuffered mode (useful for logging)
+PYTHONUNBUFFERED = "1"
+
+# Use user site-packages by default
+# PYTHONNOUSERSITE = "0"
