@@ -164,11 +164,16 @@ just secrets-apply
 
 ### Project Runtime Management with mise
 
+Python 3.12 LTS and Node.js LTS are pre-installed globally. For project-specific versions:
+
 ```bash
-# In any project directory, create .tool-versions
+# Check installed versions
+mise list
+
+# In any project directory, create .tool-versions for custom versions
 cd ~/work/my-project
 echo "node 20.10.0" > .tool-versions
-echo "python 3.12.0" >> .tool-versions
+echo "python 3.11.0" >> .tool-versions
 
 # mise automatically installs and switches versions when you cd into the directory
 ```

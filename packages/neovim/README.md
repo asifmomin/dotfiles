@@ -9,6 +9,7 @@ Ultra-minimal LazyVim configuration following Omarchy's philosophy of trusting d
 - **Transparent backgrounds** for clean aesthetic
 - **Disabled animations** for better performance
 - **Neo-tree** file explorer
+- **Markdown support** - Enhanced rendering and browser preview
 
 ## Installation
 
@@ -31,7 +32,9 @@ neovim/
         ├── lua/
         │   └── plugins/
         │       ├── theme.lua                 # Tokyo Night theme setup
-        │       └── snacks-animated-scrolling-off.lua  # Disable animations
+        │       ├── snacks-animated-scrolling-off.lua  # Disable animations
+        │       ├── markdown.lua              # Markdown preview
+        │       └── render-markdown.lua       # Enhanced markdown rendering
         └── plugin/
             └── after/
                 └── transparency.lua          # Transparent backgrounds
@@ -106,6 +109,11 @@ LazyVim provides these key bindings out of the box:
 #### Git Integration
 - `]h` / `[h` - Next/previous hunk
 - `<leader>gg` - Git status
+
+#### Markdown
+- `<leader>mp` - Open markdown preview in browser
+- `<leader>mt` - Toggle markdown preview
+- Enhanced rendering in buffer (automatic)
 
 ## Customization
 

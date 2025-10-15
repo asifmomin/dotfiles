@@ -35,7 +35,7 @@ just bootstrap
 - **Neovim** - LazyVim configuration following Omarchy's minimal approach
 - **Git** - Directory-based identity switching (work/personal) + Tokyo Night colors
 - **Tmux** - Terminal multiplexer with Tokyo Night theme and vim-like bindings
-- **mise** - Runtime version manager (replaces nvm, rbenv, pyenv, etc.)
+- **mise** - Runtime version manager with Python 3.12 LTS and Node.js LTS pre-installed
 - **Direnv** - Per-directory environment management for projects
 
 ### Modern CLI Tools
