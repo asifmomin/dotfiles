@@ -37,6 +37,7 @@ brew "btop"         # Better top/htop
 brew "lazygit"      # Git TUI
 brew "tldr"         # Simplified man pages
 brew "glow"         # Terminal markdown renderer
+brew "slides"       # Terminal-based presentation tool
 
 # Development utilities
 brew "mise"         # Runtime version manager (asdf alternative)
@@ -45,7 +46,7 @@ brew "yq"           # YAML processor
 brew "curl" unless OS.mac?       # HTTP client (macOS has curl built-in)
 brew "wget"         # File downloader
 brew "tree"         # Directory tree viewer
-brew "watch" unless OS.mac?      # Execute commands periodically (macOS has different watch)
+brew "watch"         # Execute commands periodically
 
 # System info and monitoring
 brew "fastfetch"    # System information display

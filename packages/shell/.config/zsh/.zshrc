@@ -146,6 +146,13 @@ if command -v mise >/dev/null 2>&1; then
   eval "$(mise activate zsh)"
 fi
 
+# Corepack (package manager manager for Node.js)
+# Enables pnpm, yarn without global installs
+if command -v corepack >/dev/null 2>&1; then
+  export COREPACK_ENABLE_STRICT=0  # Don't enforce package manager version unless specified
+  corepack enable >/dev/null 2>&1 || true
+fi
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Welcome Message
 # ─────────────────────────────────────────────────────────────────────────────
