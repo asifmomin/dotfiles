@@ -26,6 +26,11 @@ install-packages:
 		echo "⚠ Brewfile not found, installing essential tools only"; \
 		brew install stow git zsh starship neovim tmux; \
 	fi
+	@if command -v mise >/dev/null 2>&1; then \
+		echo "🐍 Installing mise runtimes (Python, Node.js, etc.)..."; \
+		mise install; \
+		echo "✓ Mise runtimes installed"; \
+	fi
 
 # Health check all tools and configurations
 doctor:
