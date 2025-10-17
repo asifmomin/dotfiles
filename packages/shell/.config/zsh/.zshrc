@@ -75,11 +75,27 @@ setopt EXTENDED_GLOB     # Use extended globbing syntax
 # ─────────────────────────────────────────────────────────────────────────────
 # Completion System
 # ─────────────────────────────────────────────────────────────────────────────
+# Create cache directory if it doesn't exist
+[[ ! -d "${XDG_CACHE_HOME}/zsh" ]] && mkdir -p "${XDG_CACHE_HOME}/zsh"
+
 # Load and initialize the completion system
 autoload -Uz compinit
 
 # Use XDG directory for zcompdump
-compinit -d "${XDG_CACHE_HOME}/zsh/zcompdump-${ZSH_VERSION}"
+# Only rebuild completion cache once per day for faster startup
+# Use glob qualifiers: N (null if no match), mh-24 (modified less than 24 hours ago)
+_zcompdump="${XDG_CACHE_HOME}/zsh/zcompdump-${ZSH_VERSION}"
+if [[ -s "$_zcompdump" && (! -s "${_zcompdump}.zwc" || "$_zcompdump" -nt "${_zcompdump}.zwc") ]]; then
+  # Compile zcompdump for faster loading
+  zcompile "$_zcompdump"
+fi
+for _dump in "$_zcompdump"(Nmh-24); do
+  # Cache is less than 24 hours old, skip expensive check
+  compinit -C -d "$_zcompdump"
+  break
+done
+[[ -z "$_dump" ]] && compinit -d "$_zcompdump"
+unset _zcompdump _dump
 
 # Completion options
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'  # Case insensitive matching
@@ -142,8 +158,25 @@ if [[ -f /usr/share/fzf/key-bindings.zsh ]]; then
 fi
 
 # Mise (runtime manager)
+# Lazy load mise for faster startup - only fully activate when needed
 if command -v mise >/dev/null 2>&1; then
-  eval "$(mise activate zsh)"
+  # Add mise shims to PATH immediately (fast)
+  export PATH="$HOME/.local/share/mise/shims:$PATH"
+
+  # Define lazy loader that activates mise on first use
+  _mise_lazy_load() {
+    unfunction mise python node npm pnpm 2>/dev/null
+    eval "$(mise activate zsh)"
+    mise "$@"
+  }
+
+  # Create function wrapper for mise command
+  mise() { _mise_lazy_load "$@"; }
+
+  # Optional: create wrappers for commonly used mise-managed tools
+  # Uncomment if you want instant activation when using these commands
+  # python() { _mise_lazy_load; unfunction python; python "$@"; }
+  # node() { _mise_lazy_load; unfunction node; node "$@"; }
 fi
 
 # Corepack (package manager manager for Node.js)
