@@ -72,6 +72,7 @@ if OS.mac?
   cask "obsidian"
   cask "rectangle"
   cask "flycut"
+  cask "superwhisper"
 end
 
 # Additional macOS-specific tools
