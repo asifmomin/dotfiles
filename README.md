@@ -202,6 +202,7 @@ just secrets-apply                          # Decrypt for use
 - [Git Directory Switching](./docs/git-directory-switching.md) - Automatic work/personal identity
 - [Shell Aliases Reference](./packages/shell/ALIASES.md) - All 60+ shortcuts
 - [Shell Functions](./packages/shell/README.md) - Custom shell functions
+- [macOS-Specific Packages](./docs/MACOS-PACKAGES.md) - GUI apps and GNU utilities
 
 **About:**
 - [Philosophy & Design Principles](./docs/PHILOSOPHY.md) - Design decisions

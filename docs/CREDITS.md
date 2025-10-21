@@ -50,6 +50,13 @@ This dotfiles setup leverages excellent open-source projects:
 - **[btop](https://github.com/aristocratos/btop)** - System monitor
 - **[glow](https://github.com/charmbracelet/glow)** - Terminal markdown renderer
 
+### macOS Applications
+- **[Visual Studio Code](https://code.visualstudio.com/)** - Extensible code editor
+- **[Obsidian](https://obsidian.md/)** - Knowledge management and note-taking
+- **[Rectangle](https://rectangleapp.com/)** - Window management
+- **[Flycut](https://github.com/TermiT/Flycut)** - Clipboard manager
+- **[SuperWhisper](https://superwhisper.com/)** - AI-powered voice-to-text
+
 ### Theme
 - **[Tokyo Night](https://github.com/enkia/tokyo-night-vscode-theme)** - Beautiful dark theme with excellent readability
 
