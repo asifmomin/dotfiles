@@ -28,13 +28,14 @@ brew "starship"                  # Cross-shell prompt
 
 # Modern CLI utilities (replacements)
 brew "bat"          # Better cat with syntax highlighting
-brew "eza"          # Better ls with colors and icons  
+brew "eza"          # Better ls with colors and icons
 brew "fd"           # Better find
 brew "ripgrep"      # Better grep
 brew "fzf"          # Fuzzy finder
 brew "zoxide"       # Smart cd replacement
 brew "btop"         # Better top/htop
 brew "lazygit"      # Git TUI
+brew "git-delta"    # Better git diff with syntax highlighting
 brew "tldr"         # Simplified man pages
 brew "glow"         # Terminal markdown renderer
 brew "slides"       # Terminal-based presentation tool
@@ -47,6 +48,10 @@ brew "curl" unless OS.mac?       # HTTP client (macOS has curl built-in)
 brew "wget"         # File downloader
 brew "tree"         # Directory tree viewer
 brew "watch"         # Execute commands periodically
+
+# Container runtime and tools
+brew "colima"       # Container runtime on macOS/Linux
+brew "docker"       # Docker CLI
 
 # System info and monitoring
 brew "fastfetch"    # System information display
@@ -78,11 +83,12 @@ end
 # Additional macOS-specific tools
 if OS.mac?
   brew "coreutils"  # GNU core utilities
-  brew "gnu-sed"    # GNU sed  
+  brew "gnu-sed"    # GNU sed
   brew "findutils"  # GNU find utilities
   brew "grep"       # GNU grep
   brew "gawk"       # GNU awk
   brew "gnu-tar"    # GNU tar
+  brew "pngpaste"   # Paste clipboard images as PNG files
 end
 
 # Linux-specific dependencies (when using Homebrew on Linux)  
