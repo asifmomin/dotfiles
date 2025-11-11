@@ -1,0 +1,99 @@
+gui:
+  # Tokyo Night theme colors
+  theme:
+    activeBorderColor:
+      - '#7aa2f7'
+      - bold
+    inactiveBorderColor:
+      - '#3b4261'
+    optionsTextColor:
+      - '#7dcfff'
+    selectedLineBgColor:
+      - '#283457'
+    cherryPickedCommitBgColor:
+      - '#449dab'
+    cherryPickedCommitFgColor:
+      - '#7dcfff'
+    unstagedChangesColor:
+      - '#f7768e'
+    defaultFgColor:
+      - '#c0caf5'
+    searchingActiveBorderColor:
+      - '#ff9e64'
+  # Show command log
+  showCommandLog: false
+  # Show file tree
+  showFileTree: true
+  # Show random tip on startup
+  showRandomTip: false
+  # Mouse support
+  mouseEvents: true
+  # Skip discard change confirmation
+  skipDiscardChangeWarning: false
+  # Skip stash warning
+  skipStashWarning: false
+  # Side panel width as ratio of total width
+  sidePanelWidth: 0.3333
+  # Expanded side panel width
+  expandFocusedSidePanel: false
+  # Main panel split mode (horizontal, vertical, flexible)
+  mainPanelSplitMode: 'flexible'
+  # Language (auto, en, etc.)
+  language: 'auto'
+  # Time format
+  timeFormat: '02 Jan 06'
+  # Short time format
+  shortTimeFormat: '3:04PM'
+  # Commit length
+  commitLength:
+    show: true
+git:
+  paging:
+    colorArg: always
+    useConfig: false
+    pager: delta --dark --paging=never --side-by-side --line-numbers --width=200
+  commit:
+    signOff: false
+    verbose: default
+  merging:
+    manualCommit: false
+    args: ''
+  log:
+    order: 'topo-order'
+    showGraph: 'when-maximised'
+    showWholeGraph: false
+  skipHookPrefix: WIP
+  autoFetch: true
+  autoRefresh: true
+  branchLogCmd: 'git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --'
+  overrideGpg: false
+  disableForcePushing: false
+  parseEmoji: false
+  allBranchesLogCmds:
+    - git log --graph --all --color=always --abbrev-commit --decorate --date=relative --pretty=medium
+update:
+  method: never
+refresher:
+  refreshInterval: 10
+  fetchInterval: 60
+confirmOnQuit: false
+quitOnTopLevelReturn: false
+os:
+  editPreset: 'nvim'
+  open: 'open {{filename}}'
+  openLink: 'open {{link}}'
+disableStartupPopups: false
+customCommands:
+  - key: 'C'
+    command: 'git cz'
+    description: 'commit with commitizen'
+    context: 'files'
+    loadingText: 'opening commitizen commit tool'
+    output: terminal
+  - key: 'D'
+    command: 'git diff --color=always {{.SelectedFile.Name}} | delta --dark --side-by-side'
+    description: 'view side-by-side diff'
+    context: 'files'
+    output: popup
+notARepository: 'prompt'
+promptToReturnFromSubprocess: true

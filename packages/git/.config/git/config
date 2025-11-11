@@ -106,6 +106,7 @@
 	uncommit = reset --soft HEAD^
 	
 	# Remote shortcuts
+	gpr = pull
 	pu = push
 	puf = push --force-with-lease
 	puu = push -u origin HEAD
