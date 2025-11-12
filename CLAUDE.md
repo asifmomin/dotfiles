@@ -92,6 +92,7 @@ dotfiles/
 │   ├── bat/          # Syntax-highlighted cat replacement
 │   ├── btop/         # System monitor with custom theme
 │   ├── direnv/       # Per-directory environment management
+│   ├── lazygit/      # Git TUI with Tokyo Night theme
 │   └── mise/         # Runtime version manager (Python, Node.js, etc.)
 │
 ├── lib/              # Helper libraries
@@ -118,8 +119,9 @@ dotfiles/
 │   └── ssh/          # SSH config secrets
 │
 ├── docs/             # Documentation
-│   ├── workspace-context.md  # Architecture decisions
-│   └── guardrails.md         # Design constraints
+│   ├── workspace-context.md      # Architecture decisions
+│   ├── guardrails.md             # Design constraints
+│   └── colima-docker-socket.md   # Docker/Colima setup guide
 │
 ├── justfile          # Command definitions
 ├── bootstrap.sh      # One-liner bootstrap script
@@ -218,11 +220,19 @@ Real config is in `~/.config/zsh/.zshrc`, loaded by legacy `~/.zshrc` shim.
 ### 5. Neovim Configuration
 
 Ultra-minimal LazyVim setup (Omarchy-inspired):
-- Only 4 files total
-- Trust LazyVim defaults completely
-- Tokyo Night theme only
-- Comprehensive transparency
+- Trust LazyVim defaults with minimal customization
+- Tokyo Night theme with transparency
 - No animations (performance)
+- System clipboard integration
+- Neo-tree file explorer with sensible filtering
+- Custom keybindings for path copying
+
+Configuration files:
+- `lua/config/options.lua` - Clipboard integration
+- `lua/plugins/neo-tree.lua` - File explorer customization
+- `lua/plugins/theme.lua` - Tokyo Night theme
+- `lua/plugins/snacks-animated-scrolling-off.lua` - Disable animations
+- `plugin/after/transparency.lua` - Transparent backgrounds
 
 Located in `packages/neovim/.config/nvim/`
 
@@ -305,6 +315,42 @@ pnpm add <package>
 - Best-in-class monorepo support
 
 **Fallback to npm:** npm still works as usual, use whatever the project requires.
+
+### 8. Container Development with Colima
+
+**Colima** provides a lightweight Docker runtime without Docker Desktop:
+
+**Key Features:**
+- **Lightweight VM** - Uses Lima for minimal overhead
+- **Docker compatible** - Drop-in replacement for Docker Desktop
+- **XDG compliant** - Stores data in `~/.config/colima/`
+- **Automatic socket management** - Creates symlinks for compatibility
+
+**Configuration:**
+- Installed via Homebrew: `colima` and `docker` CLI
+- No `DOCKER_HOST` variable needed (Colima creates `/var/run/docker.sock` symlink)
+- Works with all Docker-based tools (Docker Compose, Supabase CLI, etc.)
+
+**Important:**
+- Do NOT set `DOCKER_HOST` explicitly - it breaks volume mounts in some tools
+- Colima automatically creates: `/var/run/docker.sock` → `~/.config/colima/default/docker.sock`
+- See `docs/colima-docker-socket.md` for troubleshooting
+
+**Using Colima:**
+```bash
+# Start Colima
+colima start
+
+# Check status
+colima status
+
+# Stop Colima
+colima stop
+
+# Use Docker normally
+docker ps
+docker-compose up
+```
 
 ## Important Conventions
 

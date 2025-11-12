@@ -30,8 +30,11 @@ neovim/
     └── nvim/
         ├── lazyvim.json                      # LazyVim extras configuration
         ├── lua/
+        │   ├── config/
+        │   │   └── options.lua               # Clipboard integration
         │   └── plugins/
         │       ├── theme.lua                 # Tokyo Night theme setup
+        │       ├── neo-tree.lua              # File explorer customization
         │       ├── snacks-animated-scrolling-off.lua  # Disable animations
         │       ├── markdown.lua              # Markdown preview
         │       └── render-markdown.lua       # Enhanced markdown rendering
@@ -43,10 +46,24 @@ neovim/
 ## Philosophy
 
 Following Omarchy's approach:
-- **Trust LazyVim defaults** - minimal customization
+- **Trust LazyVim defaults** - minimal, essential customization only
 - **Performance first** - disable unnecessary animations
 - **Clean aesthetics** - transparent backgrounds
-- **Essential only** - just theme + transparency + neo-tree
+- **Practical additions** - clipboard integration, file explorer with sensible filtering
+
+## Customizations
+
+### System Clipboard Integration
+`lua/config/options.lua` enables seamless copy/paste with system clipboard:
+```lua
+vim.opt.clipboard = "unnamedplus"
+```
+
+### Neo-tree File Explorer
+`lua/plugins/neo-tree.lua` configures the file explorer with:
+- **Custom keybindings** - `y` to copy relative path (Y for absolute)
+- **Sensible filtering** - Hide `.git`, `.DS_Store`, show `.gitignore`, `.github`
+- **Clean interface** - Dotfiles hidden by default, toggle with `H`
 
 ## Configuration Files
 

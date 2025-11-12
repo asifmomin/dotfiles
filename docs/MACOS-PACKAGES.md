@@ -129,6 +129,45 @@ AI-powered voice transcription application for macOS.
 - Adjust transcription settings as needed
 - Check app documentation for advanced features
 
+### pngpaste
+**Type:** Clipboard Utility
+**Installation:** `brew install pngpaste`
+
+Command-line tool to paste PNG images from clipboard to files.
+
+**Key Features:**
+- Paste clipboard images directly as PNG files
+- Command-line interface for automation
+- Integrates with scripts and workflows
+- Works with screenshots and copied images
+
+**Use Cases:**
+- Save screenshots programmatically
+- Automate image workflows
+- Quick image extraction from clipboard
+- Integration with note-taking and documentation tools
+
+**Usage:**
+```bash
+# Paste clipboard image to file
+pngpaste screenshot.png
+
+# With timestamp
+pngpaste "screenshot-$(date +%Y%m%d-%H%M%S).png"
+
+# In scripts
+if pngpaste /tmp/clipboard.png 2>/dev/null; then
+    echo "Image saved"
+else
+    echo "No image in clipboard"
+fi
+```
+
+**Tips:**
+- Use with keyboard shortcuts (via tools like Alfred or custom scripts)
+- Combine with screenshot utilities for enhanced workflows
+- Great for quickly saving images while documenting
+
 ## GNU Utilities
 
 macOS ships with BSD versions of common Unix utilities, which have different flags and behavior than GNU versions. These packages provide GNU-compatible versions for cross-platform script compatibility.

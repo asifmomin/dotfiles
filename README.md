@@ -37,6 +37,7 @@ just bootstrap
 - **Tmux** - Terminal multiplexer with Tokyo Night theme and vim-like bindings
 - **mise** - Runtime version manager with Python 3.12 LTS and Node.js LTS pre-installed
 - **Direnv** - Per-directory environment management for projects
+- **Colima + Docker** - Lightweight container runtime without Docker Desktop
 
 ### Modern CLI Tools
 - **Bat** - Syntax-highlighted file viewer with Tokyo Night theme
@@ -47,6 +48,8 @@ just bootstrap
 - **Fzf** - Fuzzy finder with Tokyo Night colors
 - **Zoxide** - Smart cd replacement (via shell functions)
 - **Glow** - Terminal markdown renderer with syntax highlighting
+- **git-delta** - Better git diff with syntax highlighting and side-by-side view
+- **lazygit** - Terminal UI for git with Tokyo Night theme integration
 
 ### Advanced Features
 - **SOPS + age** - Encrypted secrets management for API keys and credentials
