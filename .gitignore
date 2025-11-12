@@ -48,3 +48,7 @@ Thumbs.db
 # Temporary files
 .tmp/
 tmp/
+
+# Shell history
+.zsh_history
+*/.zsh_history
