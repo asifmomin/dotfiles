@@ -16,9 +16,9 @@ return {
     },
     filesystem = {
       filtered_items = {
-        visible = false, -- Hidden files are hidden by default
-        hide_dotfiles = true,
-        hide_gitignored = true,
+        visible = true, -- Show hidden files by default
+        hide_dotfiles = false,
+        hide_gitignored = false,
         hide_by_name = {
           -- Add files/folders you want to always hide
           ".git",

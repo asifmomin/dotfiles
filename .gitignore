@@ -12,6 +12,9 @@ secrets/*/*.yml
 *.age
 *.key
 
+# Git identity configs (work, personal, etc.)
+packages/git/.config/git/config-*
+
 # Local overrides
 local/
 *.local

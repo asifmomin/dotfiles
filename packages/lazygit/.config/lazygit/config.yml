@@ -48,10 +48,10 @@ gui:
   commitLength:
     show: true
 git:
-  paging:
-    colorArg: always
-    useConfig: false
-    pager: delta --dark --paging=never --side-by-side --line-numbers --width=200
+  pagers:
+    - colorArg: always
+      useConfig: false
+      pager: delta --dark --paging=never --side-by-side --line-numbers --width=200
   commit:
     signOff: false
     verbose: default

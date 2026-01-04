@@ -32,6 +32,7 @@ just bootstrap
 ## What's Included
 
 ### Development Environment
+
 - **Neovim** - LazyVim configuration following Omarchy's minimal approach
 - **Git** - Directory-based identity switching (work/personal) + Tokyo Night colors
 - **Tmux** - Terminal multiplexer with Tokyo Night theme and vim-like bindings
@@ -40,6 +41,7 @@ just bootstrap
 - **Colima + Docker** - Lightweight container runtime without Docker Desktop
 
 ### Modern CLI Tools
+
 - **Bat** - Syntax-highlighted file viewer with Tokyo Night theme
 - **Btop** - System monitor with custom Tokyo Night theme
 - **Eza** - Modern ls replacement (via shell aliases)
@@ -52,6 +54,7 @@ just bootstrap
 - **lazygit** - Terminal UI for git with Tokyo Night theme integration
 
 ### Advanced Features
+
 - **SOPS + age** - Encrypted secrets management for API keys and credentials
 - **Tokyo Night theme** - Unified color palette across all applications
 - **XDG compliance** - Clean config organization in ~/.config/
@@ -60,6 +63,7 @@ just bootstrap
 ## Commands
 
 ### Setup & Installation
+
 ```bash
 just bootstrap        # Full setup: packages, stow, secrets
 just doctor          # Health check all tools
@@ -67,6 +71,7 @@ just install-packages # Install packages via Homebrew
 ```
 
 ### Configuration Management
+
 ```bash
 just stow-check      # Preview stow operations (dry run)
 just stow-apply      # Apply all configuration packages
@@ -75,6 +80,7 @@ just stow-restow     # Remove and reapply packages
 ```
 
 ### Secrets Management
+
 ```bash
 just secrets-init    # Generate age keys and configure SOPS
 just secrets-edit f= # Edit encrypted file (e.g., secrets/env/github.sops.yaml)
@@ -83,6 +89,7 @@ just secrets-apply   # Decrypt all secrets to ~/.local/share/secrets/
 ```
 
 ### Maintenance
+
 ```bash
 just update          # Update packages and sync dotfiles
 just clean           # Remove broken symlinks
@@ -95,6 +102,7 @@ just edit            # Open dotfiles directory in editor
 Commonly used shortcuts (full list in [Shell Aliases Reference](./packages/shell/ALIASES.md)):
 
 ### Navigation
+
 ```bash
 ls / lsa            # Enhanced listing with eza (icons, git status)
 lt / lta            # Tree view (2 levels deep)
@@ -103,6 +111,7 @@ lt / lta            # Tree view (2 levels deep)
 ```
 
 ### File Operations
+
 ```bash
 cat                 # Syntax-highlighted viewing with bat
 find                # Fast file search with fd
@@ -111,6 +120,7 @@ ff                  # Fuzzy finder with preview
 ```
 
 ### Git Workflow
+
 ```bash
 g                   # git
 gst                 # git status
@@ -122,6 +132,7 @@ gd                  # git diff
 ```
 
 ### Docker
+
 ```bash
 d / dc              # docker / docker-compose
 dps / dpsa          # docker ps / docker ps -a
@@ -129,12 +140,14 @@ dlog                # docker logs -f
 ```
 
 ### System Monitoring
+
 ```bash
 top                 # btop (modern system monitor)
 du                  # dust (disk usage)
 ```
 
 ### Homebrew
+
 ```bash
 brewup              # brew update && brew upgrade
 brewi / brews       # brew install / brew search
@@ -145,6 +158,7 @@ brewi / brews       # brew install / brew search
 ## Quick Reference
 
 ### Essential Commands
+
 ```bash
 just bootstrap        # Initial setup (first time only)
 just doctor          # Health check all tools
@@ -155,6 +169,7 @@ just update          # Update packages and dotfiles
 ### Common Workflows
 
 **Git Identity Switching**
+
 ```bash
 # Setup once
 mkdir -p ~/work ~/per
@@ -167,6 +182,7 @@ cd ~/per/side-project  # Uses personal identity
 ```
 
 **Runtime Version Management (mise)**
+
 ```bash
 # In your project directory
 echo "node 20.10.0" > .tool-versions
@@ -176,6 +192,7 @@ echo "python 3.12.0" >> .tool-versions
 ```
 
 **Secrets Management**
+
 ```bash
 just secrets-init                           # Generate encryption keys
 just secrets-edit f=secrets/env/api.sops.yaml  # Create encrypted secret
@@ -183,6 +200,7 @@ just secrets-apply                          # Decrypt for use
 ```
 
 **Quick Links**
+
 - [Quick Start Guide](./docs/QUICKSTART.md) - Get running in 5 minutes
 - [Shell Customization](./packages/shell/README.md#customization)
 - [FAQ](./docs/FAQ.md) - Common questions
@@ -197,20 +215,24 @@ just secrets-apply                          # Decrypt for use
 ## Documentation
 
 **Getting Started:**
+
 - [Quick Start Guide](./docs/QUICKSTART.md) - Get running in 5 minutes
 - [Installation Instructions](./docs/instructions.md) - Detailed setup guide
 - [FAQ](./docs/FAQ.md) - Common questions and troubleshooting
 
 **Configuration:**
+
 - [Git Directory Switching](./docs/git-directory-switching.md) - Automatic work/personal identity
 - [Shell Aliases Reference](./packages/shell/ALIASES.md) - All 60+ shortcuts
 - [Shell Functions](./packages/shell/README.md) - Custom shell functions
 - [macOS-Specific Packages](./docs/MACOS-PACKAGES.md) - GUI apps and GNU utilities
 
 **About:**
+
 - [Philosophy & Design Principles](./docs/PHILOSOPHY.md) - Design decisions
 - [Credits & Inspiration](./docs/CREDITS.md) - Omarchy and tools used
 
 ## License
 
 MIT - see [LICENSE](./LICENSE)
+

@@ -36,6 +36,8 @@ tmux/
 ### Prefix Key: `Ctrl-a`
 
 #### Session Management
+- `Ctrl-a S` - Create new session
+- `Ctrl-a s` - List/switch sessions
 - `Ctrl-a r` - Reload tmux configuration
 - `Ctrl-a d` - Detach from session
 

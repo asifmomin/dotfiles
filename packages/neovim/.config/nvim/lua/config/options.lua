@@ -3,3 +3,6 @@
 
 -- Enable system clipboard integration
 vim.opt.clipboard = "unnamedplus"
+
+-- Enable automatic file reload when changed outside Neovim
+vim.opt.autoread = true
