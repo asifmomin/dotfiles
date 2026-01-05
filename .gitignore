@@ -15,6 +15,9 @@ secrets/*/*.yml
 # Git identity configs (work, personal, etc.)
 packages/git/.config/git/config-*
 
+# Git local config (machine-specific includes)
+config-local
+
 # Local overrides
 local/
 *.local

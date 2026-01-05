@@ -30,10 +30,7 @@ alias -- -='cd -'  # Go to previous directory
 # ─────────────────────────────────────────────────────────────────────────────
 # Modern cat with bat (if available)
 if command -v bat >/dev/null 2>&1; then
-  alias cat='bat --style=numbers,changes --wrap never'
-  alias catp='bat --style=plain --wrap never'  # Plain bat
-else
-  alias cat='cat'
+  alias catn='bat --style=numbers,changes --wrap never'  # With line numbers
 fi
 
 # Archive operations

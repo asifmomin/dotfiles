@@ -13,6 +13,10 @@
 [includeIf "gitdir:~/per/"]
 	path = ~/.config/git/config-personal
 
+# Local overrides (not tracked in dotfiles)
+[include]
+	path = ~/.config/git/config-local
+
 [core]
 	editor = nvim
 	autocrlf = input

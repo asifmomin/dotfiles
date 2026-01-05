@@ -158,25 +158,8 @@ if [[ -f /usr/share/fzf/key-bindings.zsh ]]; then
 fi
 
 # Mise (runtime manager)
-# Lazy load mise for faster startup - only fully activate when needed
 if command -v mise >/dev/null 2>&1; then
-  # Add mise shims to PATH immediately (fast)
-  export PATH="$HOME/.local/share/mise/shims:$PATH"
-
-  # Define lazy loader that activates mise on first use
-  _mise_lazy_load() {
-    unfunction mise python node npm pnpm 2>/dev/null
-    eval "$(mise activate zsh)"
-    mise "$@"
-  }
-
-  # Create function wrapper for mise command
-  mise() { _mise_lazy_load "$@"; }
-
-  # Optional: create wrappers for commonly used mise-managed tools
-  # Uncomment if you want instant activation when using these commands
-  # python() { _mise_lazy_load; unfunction python; python "$@"; }
-  # node() { _mise_lazy_load; unfunction node; node "$@"; }
+  eval "$(mise activate zsh)"
 fi
 
 # Corepack (package manager manager for Node.js)
@@ -186,12 +169,3 @@ if command -v corepack >/dev/null 2>&1; then
   corepack enable >/dev/null 2>&1 || true
 fi
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Welcome Message
-# ─────────────────────────────────────────────────────────────────────────────
-# Disabled - uncomment to show system info on startup
-# if [[ -o interactive ]]; then
-#   if command -v fastfetch >/dev/null 2>&1; then
-#     fastfetch --logo small
-#   fi
-# fi
