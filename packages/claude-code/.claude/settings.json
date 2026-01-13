@@ -1,0 +1,42 @@
+{
+  "statusLine": {
+    "type": "command",
+    "command": "/Users/asif/.claude/statusline.sh"
+  },
+  "enabledPlugins": {
+    "writing-elements@the-construct": true,
+    "document-skills@anthropic-agent-skills": true,
+    "beads@beads-marketplace": true
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "terminal-notifier -title 'Claude Code' -message 'Permission request pending' -sound Alert"
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "terminal-notifier -title 'Claude Code' -message 'Waiting for your input' -sound Glass"
+          }
+        ]
+      },
+      {
+        "matcher": "elicitation_dialog",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "terminal-notifier -title 'Claude Code' -message 'MCP tool needs input' -sound Glass"
+          }
+        ]
+      }
+    ]
+  }
+}
