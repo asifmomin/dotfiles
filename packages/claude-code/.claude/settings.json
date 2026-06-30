@@ -1,12 +1,20 @@
 {
-  "statusLine": {
-    "type": "command",
-    "command": "/Users/asif/.claude/statusline.sh"
-  },
-  "enabledPlugins": {
-    "writing-elements@the-construct": true,
-    "document-skills@anthropic-agent-skills": true,
-    "beads@beads-marketplace": true
+  "permissions": {
+    "allow": [
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_type",
+      "mcp__playwright__browser_close",
+      "mcp__playwright__browser_resize",
+      "mcp__playwright__browser_hover",
+      "mcp__playwright__browser_select_option",
+      "mcp__playwright__browser_press_key",
+      "mcp__playwright__browser_wait_for",
+      "mcp__playwright__browser_fill_form"
+    ],
+    "defaultMode": "auto"
   },
   "hooks": {
     "Notification": [
@@ -38,5 +46,44 @@
         ]
       }
     ]
-  }
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "/Users/asif/.claude/statusline.sh"
+  },
+  "enabledPlugins": {
+    "writing-elements@the-construct": true,
+    "terraform-skill@antonbabenko": true,
+    "playground@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "skillmeter@skillbench": true
+  },
+  "extraKnownMarketplaces": {
+    "antonbabenko": {
+      "source": {
+        "source": "github",
+        "repo": "antonbabenko/terraform-skill"
+      }
+    },
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
+    },
+    "skillbench": {
+      "source": {
+        "source": "github",
+        "repo": "SkillBench-AI/skillmeter-claude-code-marketplace",
+        "ref": "feat/jwt-telemetry-endpoint"
+      }
+    }
+  },
+  "skipWorkflowUsageWarning": true,
+  "preferredNotifChannel": "iterm2",
+  "autoCompactEnabled": false,
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": true,
+  "tui": "fullscreen"
 }
