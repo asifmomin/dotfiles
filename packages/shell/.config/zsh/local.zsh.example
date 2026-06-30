@@ -47,6 +47,9 @@
 # export NODE_ENV="development"
 # export NPM_TOKEN="your-token"
 
+# Claude Code MCP secrets (referenced by .claude/.mcp.json via ${VAR} expansion)
+# export PLAYWRIGHT_MCP_EXTENSION_TOKEN="your-token"
+
 # Python
 # export PYTHONPATH="$HOME/python-libs:$PYTHONPATH"
 
