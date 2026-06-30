@@ -5,6 +5,7 @@ return {
       -- Configure linters for markdown files
       linters_by_ft = {
         markdown = { "markdownlint" },
+        terraform = { "tflint" },
       },
     },
   },

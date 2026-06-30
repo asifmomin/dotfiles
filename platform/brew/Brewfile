@@ -40,6 +40,9 @@ brew "tldr"         # Simplified man pages
 brew "glow"         # Terminal markdown renderer
 brew "slides"       # Terminal-based presentation tool
 
+# Linting tools
+brew "tflint"       # Terraform linter
+
 # Development utilities
 brew "mise"         # Runtime version manager (asdf alternative)
 brew "jq"           # JSON processor

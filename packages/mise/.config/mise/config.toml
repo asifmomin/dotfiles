@@ -4,6 +4,8 @@
 
 # Global tools installed across all projects
 [tools]
+bun = "latest"
+go = "latest"
 # Node.js LTS (managed via corepack for package managers)
 node = "lts"
 
