@@ -21,3 +21,8 @@ discussion — not immediate implementation.
 
 Keep responses concise. Use bullet points and tables, not paragraphs.
 The user will ask for detail when needed.
+
+## Git Commit Messages
+
+Do not add a `Co-Authored-By: Claude ...` trailer — or any AI-attribution line —
+to git commit messages, in any repository.
