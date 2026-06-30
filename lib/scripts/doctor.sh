@@ -46,7 +46,16 @@ command -v tmux >/dev/null 2>&1 && echo "  tmux: ✓" || echo "  tmux: ✗"
 echo ""
 echo "Development tools:"
 command -v mise >/dev/null 2>&1 && echo "  mise: ✓" || echo "  mise: ✗"
+
+# Activate mise's shims so its managed runtimes (python, node, etc.) are on
+# PATH for the checks below. doctor runs in a non-interactive shell that never
+# sources the interactive mise hook, so without this these tools report false
+# negatives even when correctly installed.
+if command -v mise >/dev/null 2>&1; then
+    eval "$(mise activate bash --shims)" 2>/dev/null || true
+fi
+
 command -v python >/dev/null 2>&1 && echo "  python: ✓ ($(python --version 2>&1 | cut -d' ' -f2))" || echo "  python: ✗"
 command -v node >/dev/null 2>&1 && echo "  node: ✓" || echo "  node: ✗"
 command -v corepack >/dev/null 2>&1 && echo "  corepack: ✓" || echo "  corepack: ✗"
-command -v pnpm >/dev/null 2>&1 && echo "  pnpm: ✓" || echo "  pnpm: ✗"
+command -v pnpm >/dev/null 2>&1 && echo "  pnpm: ✓" || echo "  pnpm: ✗ (run 'corepack enable')"
