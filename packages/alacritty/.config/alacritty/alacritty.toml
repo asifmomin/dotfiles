@@ -82,6 +82,9 @@ bindings = [
   # Copy/Paste
   { key = "C", mods = "Control|Shift", action = "Copy" },
   { key = "V", mods = "Control|Shift", action = "Paste" },
+
+  # Prevent accidental window close
+  { key = "W", mods = "Command", action = "ReceiveChar" },
 ]
 
 [cursor]
