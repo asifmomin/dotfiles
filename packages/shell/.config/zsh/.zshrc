@@ -45,8 +45,14 @@ export BAT_THEME="TwoDark"  # Close to Tokyo Night
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="./bin:$PATH"
 
-# Homebrew initialization (Linux/WSL)
-if [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
+# Homebrew initialization (macOS Apple Silicon/Intel, then Linux/WSL)
+# Self-sufficient so interactive shells get brew on PATH even when
+# ~/.zprofile wasn't set up (e.g. a non-login shell or a fresh install).
+if [[ -x "/opt/homebrew/bin/brew" ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -x "/usr/local/bin/brew" ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+elif [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 elif [[ -d "$HOME/.linuxbrew" ]]; then
     eval "$($HOME/.linuxbrew/bin/brew shellenv)"
