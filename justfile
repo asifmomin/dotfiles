@@ -77,6 +77,15 @@ secrets-apply:
 secrets-show f:
 	@lib/scripts/secrets.sh show "{{f}}"
 
+# Clone (if needed) and wire up portable Claude Code memory pointers
+claude-memory-link:
+	@echo "🧠 Linking Claude Code memory..."
+	@if [[ ! -d ~/workspace/claude-memory ]]; then \
+		echo "Cloning claude-memory repo..."; \
+		git clone git@github.com:asifmomin/claude-memory.git ~/workspace/claude-memory; \
+	fi
+	@~/workspace/claude-memory/bootstrap-pointers.sh
+
 # Update everything (packages, dotfiles, secrets)
 update:
 	@echo "🔄 Updating everything..."
