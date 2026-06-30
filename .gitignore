@@ -27,6 +27,9 @@ packages/**/local.zsh
 # Package-specific runtime directories
 packages/alacritty/.local/
 
+# Tmux plugins (managed by TPM, cloned at runtime)
+packages/tmux/.config/tmux/plugins/
+
 # OS generated files
 .DS_Store
 .DS_Store?
