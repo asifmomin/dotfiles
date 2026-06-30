@@ -117,9 +117,16 @@ install_homebrew() {
 
 # Ensure Homebrew is in PATH
 ensure_brew_in_path() {
-    if [[ -d "$HOME/.linuxbrew" ]]; then
-        eval "$($HOME/.linuxbrew/bin/brew shellenv)"
-    elif [[ -d "/home/linuxbrew/.linuxbrew" ]]; then
+    # macOS (Apple Silicon then Intel), then Linux/WSL (user then system).
+    # A fresh Homebrew install is on disk but not yet on PATH, so locate the
+    # brew binary directly rather than relying on the shell environment.
+    if [[ -x "/opt/homebrew/bin/brew" ]]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    elif [[ -x "/usr/local/bin/brew" ]]; then
+        eval "$(/usr/local/bin/brew shellenv)"
+    elif [[ -x "$HOME/.linuxbrew/bin/brew" ]]; then
+        eval "$("$HOME/.linuxbrew/bin/brew" shellenv)"
+    elif [[ -x "/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
         eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
     fi
 }
