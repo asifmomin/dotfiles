@@ -2,9 +2,24 @@
 
 set -euo pipefail
 
+# Resolve platform via the shared helper rather than hardcoding it
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# shellcheck source=../platform.sh
+source "$SCRIPT_DIR/platform.sh"
+
+if is_macos; then
+    PLATFORM="macos"
+elif is_wsl; then
+    PLATFORM="wsl"
+elif is_linux; then
+    PLATFORM="linux"
+else
+    PLATFORM="unknown"
+fi
+
 echo "🔍 Running dotfiles health check..."
 echo ""
-echo "Platform: linux ✓"
+echo "Platform: ${PLATFORM} ✓"
 echo ""
 
 echo "Required tools:"
