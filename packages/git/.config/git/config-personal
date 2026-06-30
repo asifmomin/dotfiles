@@ -11,9 +11,9 @@
 	personal-init = "!git init && git config user.name 'Your Personal Name' && git config user.email 'your.personal.email@gmail.com'"
 	personal-clone = "clone --config user.name='Your Personal Name' --config user.email='your.personal.email@gmail.com'"
 
-# Personal GitHub SSH configuration
+# Personal GitHub: push over SSH, clone/pull over HTTPS (no key needed for reads)
 [url "git@github.com:"]
-	insteadOf = "https://github.com/"
+	pushInsteadOf = "https://github.com/"
 
 # Personal-specific push configuration
 [push]

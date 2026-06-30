@@ -121,8 +121,9 @@
 	# Clean shortcuts
 	clean-branches = !git branch --merged | grep -v '\\*\\|main\\|master\\|develop' | xargs -n 1 git branch -d
 
+# Push to GitHub over SSH while cloning/pulling over HTTPS (no key needed for reads)
 [url "ssh://git@github.com/"]
-	insteadOf = https://github.com/
+	pushInsteadOf = https://github.com/
 
 [rerere]
 	enabled = true
