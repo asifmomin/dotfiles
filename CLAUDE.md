@@ -284,15 +284,16 @@ layout_python 3.12  # Creates and activates .venv automatically
 
 ### 7. Node.js Package Management with Corepack + pnpm
 
-**Corepack** is automatically enabled to manage package managers (npm, pnpm, yarn):
+**Corepack** manages package managers (npm, pnpm, yarn) without global installs:
 
 **Key Features:**
-- **No global installs needed** - pnpm available immediately via corepack
+- **No global installs needed** - pnpm available via corepack shims
 - **Project-specific versions** - Respects `packageManager` field in `package.json`
 - **Consistent environments** - Same package manager version across team/CI
 
 **Configuration:**
-- Enabled automatically on shell startup (see `packages/shell/.config/zsh/.zshrc:149`)
+- Enable once per machine: `corepack enable` (not run on shell startup, to keep
+  startup under 200ms; the shims persist in the Node bin dir afterwards)
 - Node.js managed via mise (see `mise list` for installed versions)
 - Corepack comes bundled with Node.js v16.9.0+
 
