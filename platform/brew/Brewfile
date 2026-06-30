@@ -40,10 +40,6 @@ brew "tldr"         # Simplified man pages
 brew "glow"         # Terminal markdown renderer
 brew "slides"       # Terminal-based presentation tool
 
-# Linting tools
-tap "terraform-linters/tap"                 # Tap providing tflint
-brew "terraform-linters/tap/tflint"         # Terraform linter
-
 # Development utilities
 brew "mise"         # Runtime version manager (asdf alternative)
 brew "jq"           # JSON processor
