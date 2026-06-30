@@ -59,6 +59,12 @@
     "skillmeter@skillbench": true
   },
   "extraKnownMarketplaces": {
+    "the-construct": {
+      "source": {
+        "source": "github",
+        "repo": "asifmomin/the-construct"
+      }
+    },
     "antonbabenko": {
       "source": {
         "source": "github",

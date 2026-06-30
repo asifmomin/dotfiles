@@ -21,6 +21,18 @@ just stow-apply
 stow -d packages -t ~ claude-code
 ```
 
+## New Machine Setup
+
+After `just stow-apply`, a few things are not carried by the stowed files and need one-time setup:
+
+1. **Login** — run `claude` and authenticate (the OAuth token is machine-local, never committed).
+2. **Plugins** — auto-install from `enabledPlugins` in `settings.json` on first launch. `writing-elements@the-construct` resolves via its marketplace declared in `extraKnownMarketplaces` (`asifmomin/the-construct`).
+3. **MCP (Playwright)** — user-scope MCP servers live in machine-local `~/.claude.json`, so re-add Playwright once:
+   ```bash
+   claude mcp add -s user playwright -- npx -y @playwright/mcp@latest --extension
+   ```
+   If your Playwright setup uses `PLAYWRIGHT_MCP_EXTENSION_TOKEN`, ensure it is exported (e.g. via SOPS-decrypted secrets) before launching.
+
 ## Structure
 
 ```
