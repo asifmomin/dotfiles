@@ -186,15 +186,24 @@ install_essentials() {
 # Clone dotfiles repository
 clone_dotfiles() {
     print_step "Cloning dotfiles repository"
-    
+
+    # The dotfiles git config rewrites https://github.com/ -> ssh:// via
+    # url.insteadOf. Once it's stowed, that rewrite would force this public
+    # HTTPS clone/pull onto SSH and demand a key the machine may not have.
+    # Disable the global git config (GIT_CONFIG_GLOBAL=/dev/null) so the
+    # rewrite can't apply, and avoid SSH host-key prompts entirely.
+    local git_https=(env GIT_CONFIG_GLOBAL=/dev/null GIT_TERMINAL_PROMPT=0 git)
+
     if [[ -d "$DOTFILES_DIR" ]]; then
         print_warning "Dotfiles directory exists, pulling latest changes"
         cd "$DOTFILES_DIR"
-        git pull --quiet origin main || git pull --quiet origin master
+        # A prior run may have stored the rewritten ssh:// URL as origin; force HTTPS.
+        "${git_https[@]}" remote set-url origin "$DOTFILES_REPO" 2>/dev/null || true
+        "${git_https[@]}" pull --quiet origin main || "${git_https[@]}" pull --quiet origin master
     else
-        git clone --quiet "$DOTFILES_REPO" "$DOTFILES_DIR"
+        "${git_https[@]}" clone --quiet "$DOTFILES_REPO" "$DOTFILES_DIR"
     fi
-    
+
     cd "$DOTFILES_DIR"
     print_success "Dotfiles repository ready"
 }
