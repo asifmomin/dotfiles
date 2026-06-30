@@ -6,17 +6,21 @@
 
 ## Quick Start
 
-```bash
-# One-liner bootstrap (installs everything)
-curl -fsSL https://raw.githubusercontent.com/asifmomin/dotfiles/main/bootstrap.sh | bash
+One-liner bootstrap (installs everything):
 
-# OR manual installation
+```bash
+curl -fsSL https://raw.githubusercontent.com/asifmomin/dotfiles/main/bootstrap.sh | bash
+```
+
+Or install manually:
+
+```bash
 git clone https://github.com/asifmomin/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 just bootstrap
-
-# After bootstrap completes, close and restart your shell for changes to take effect
 ```
+
+After bootstrap completes, close and restart your shell for the changes to take effect.
 
 ## Features
 

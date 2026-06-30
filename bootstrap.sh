@@ -32,6 +32,10 @@ print_error() {
     echo -e "${RED}✗${NC} $1"
 }
 
+print_info() {
+    echo -e "${CYAN}ℹ${NC} $1"
+}
+
 print_header() {
     echo -e "${PURPLE}"
     echo "╔══════════════════════════════════════════════════════════════╗"
@@ -70,7 +74,23 @@ install_homebrew() {
 
     print_step "Installing Homebrew"
     if [[ $(detect_platform) == "macos" ]]; then
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        # On a fresh Mac, Homebrew's installer needs sudo (Command Line Tools,
+        # chown of the prefix). When this script is run via `curl ... | bash`,
+        # stdin is the pipe — not the terminal — so the installer's sudo
+        # password prompt has nothing to read from and fails.
+        #
+        # Reattach the controlling terminal (/dev/tty) as stdin for the
+        # installer so the password prompt works. If no TTY is available
+        # (CI, container builds), fall back to NONINTERACTIVE mode, which
+        # requires sudo to be passwordless or pre-authenticated.
+        local brew_installer="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
+        if [[ -e /dev/tty && -r /dev/tty ]]; then
+            /bin/bash -c "$(curl -fsSL "$brew_installer")" < /dev/tty
+        else
+            print_warning "No terminal detected; running Homebrew installer non-interactively"
+            print_warning "This needs passwordless or pre-authorized sudo to succeed"
+            NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL "$brew_installer")"
+        fi
     else
         # Linux/WSL - Install to user's home directory (no sudo required)
         print_step "Installing Homebrew to user directory (no sudo required)"

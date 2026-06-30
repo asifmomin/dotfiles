@@ -39,6 +39,8 @@ This will:
 4. Apply all configuration packages via stow
 5. Setup shell environment
 
+> **Note (macOS):** On a fresh Mac, Homebrew's installer will prompt once for your password (sudo) to install the Xcode Command Line Tools. This works through `curl ... | bash` because the script reattaches your terminal. If it fails needing sudo in a non-interactive environment, see [Bootstrap fails needing sudo on macOS](FAQ.md#bootstrap-fails-needing-sudo-on-macos).
+
 **After installation completes, restart your shell:**
 ```bash
 exec zsh

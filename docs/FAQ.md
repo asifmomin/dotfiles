@@ -4,7 +4,14 @@
 
 ### Do I need sudo/root access?
 
-Only for changing your default shell with `chsh`. Homebrew package installation runs in user space and doesn't require sudo (on Linux/WSL, Homebrew installs to user directory).
+A few one-time steps need it:
+
+- **macOS, first-time Homebrew install** — Homebrew's own installer needs sudo to install the Xcode Command Line Tools and set up `/opt/homebrew`. You'll be prompted for your password once. (Subsequent `brew install` runs do not need sudo.)
+- **Changing your default shell** with `chsh`, and adding the shell to `/etc/shells`.
+
+On Linux/WSL, Homebrew installs to your home directory, so package installation itself never needs sudo.
+
+The bootstrap script reattaches your terminal (`/dev/tty`) when run via `curl ... | bash`, so the Homebrew password prompt works even through a pipe. If you're running in a non-interactive environment (CI, Docker build) where no terminal exists, see [Bootstrap fails needing sudo on macOS](#bootstrap-fails-needing-sudo-on-macos).
 
 ### Can I use this with my existing dotfiles?
 
@@ -222,6 +229,24 @@ echo "ruby $(ruby --version | awk '{print $2}')" >> .tool-versions
 ```
 
 ## Troubleshooting
+
+### Bootstrap fails needing sudo on macOS
+
+On a fresh Mac, the bootstrap installs Homebrew, and Homebrew's installer needs sudo (Command Line Tools + `/opt/homebrew` setup). If you see a sudo/permission error during this step, you're almost certainly in a non-interactive environment where there's no terminal for the password prompt.
+
+The script handles the normal `curl ... | bash` case by reattaching `/dev/tty`, so an interactive terminal will simply prompt you for your password. If it still fails:
+
+```bash
+# Option A: install Homebrew first (prompts for your password correctly),
+# then re-run the bootstrap — it will skip Homebrew since it's present
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+curl -fsSL https://raw.githubusercontent.com/asifmomin/dotfiles/main/bootstrap.sh | bash
+
+# Option B: run the bootstrap without piping so stdin stays on your terminal
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/asifmomin/dotfiles/main/bootstrap.sh)"
+```
+
+In a truly headless context (CI, Docker build), pre-authorize sudo or use a passwordless sudo configuration — the installer runs in `NONINTERACTIVE` mode there and cannot prompt.
 
 ### Shell startup is slow
 
