@@ -41,7 +41,8 @@ brew "glow"         # Terminal markdown renderer
 brew "slides"       # Terminal-based presentation tool
 
 # Linting tools
-brew "tflint"       # Terraform linter
+tap "terraform-linters/tap"                 # Tap providing tflint
+brew "terraform-linters/tap/tflint"         # Terraform linter
 
 # Development utilities
 brew "mise"         # Runtime version manager (asdf alternative)
