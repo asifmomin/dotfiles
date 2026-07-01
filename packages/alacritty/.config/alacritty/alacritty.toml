@@ -92,7 +92,10 @@ style = { shape = "Block", blinking = "Off" }
 unfocused_hollow = true
 
 [selection]
-save_to_clipboard = true
+# Auto-copy on select spams NSPasteboard under tmux (mouse on) and triggers
+# "NSPasteboard#writeObjects: returned false" warnings. Copy explicitly instead
+# (Ctrl+Shift+C in Alacritty, y in tmux copy-mode -> pbcopy).
+save_to_clipboard = false
 
 [scrolling]
 history = 10000
